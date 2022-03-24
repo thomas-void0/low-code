@@ -1,2 +1,1 @@
-# low-code
-低代码探索
+vite-react-template
