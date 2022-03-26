@@ -8,17 +8,18 @@
     "build": "tsc && cross-env NODE_ENV=production vite build --mode production",
     "lint": "eslint --ext .jsx,js,ts,tsx src/ --fix ./src --cache",
 		"lint-staged": "lint-staged",
+		"prepare": "husky install",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
     "lint:style": "stylelint --cache --fix \"**/*.{less,postcss,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "preview": "vite preview"
   },
-  "lint-staged": {
-    "**/*.less": "npm run lint:style",
-    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": [
-      "prettier --write"
-    ]
-  },
+	"lint-staged": {
+		"**/*.less": "stylelint --syntax less",
+		"**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+		"**/*.{js,jsx,tsx,ts,less,md,json}": [
+			"prettier --write"
+		]
+	},
   "dependencies": {
     "ahooks": "^3.1.14",
     "antd": "^4.19.3",
