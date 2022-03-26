@@ -1,187 +1,101 @@
-const { defineConfig } = require('eslint-define-config');
-
-module.exports = defineConfig({
-  root: true,
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2020,
-    parser: '@typescript-eslint/parser',
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-    requireConfigFile: false,
-  },
-  extends: [
-    'prettier',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
-  plugins: ['prettier'],
-  env: {
-    browser: true,
-    node: true,
-    es6: true,
-  },
-  rules: {
-    'prettier/prettier': 'warn',
-    'no-undef': 0,
-    '@typescript-eslint/adjacent-overload-signatures': 0,
-    '@typescript-eslint/array-type': 'error',
-    '@typescript-eslint/await-thenable': 0,
-    '@typescript-eslint/ban-ts-comment': 0,
-    '@typescript-eslint/ban-tslint-comment': 0,
-    'brace-style': 'off',
-    '@typescript-eslint/brace-style': 0,
-    '@typescript-eslint/class-literal-property-style': 0,
-    'comma-dangle': 'off',
-    '@typescript-eslint/comma-dangle': 0,
-    'comma-spacing': 'off',
-    '@typescript-eslint/comma-spacing': 0,
-    '@typescript-eslint/consistent-indexed-object-style': 0,
-    '@typescript-eslint/consistent-type-assertions': 0,
-    '@typescript-eslint/consistent-type-definitions': 0,
-    '@typescript-eslint/consistent-type-imports': 1,
-    'default-param-last': 'off',
-    '@typescript-eslint/default-param-last': 0,
-    '@typescript-eslint/explicit-function-return-type': 0,
-    'func-call-spacing': 'off',
-    '@typescript-eslint/consistent-type-imports': 'off',
-    '@typescript-eslint/func-call-spacing': 0,
-    indent: 'off',
-    'init-declarations': 'off',
-    '@typescript-eslint/init-declarations': 0,
-    'keyword-spacing': 'off',
-    '@typescript-eslint/keyword-spacing': 0,
-    'lines-between-class-members': 'off',
-    '@typescript-eslint/lines-between-class-members': 0,
-    '@typescript-eslint/member-delimiter-style': 0,
-    '@typescript-eslint/member-ordering': 0,
-    '@typescript-eslint/method-signature-style': 'error',
-    'no-array-constructor': 'off',
-    'prefer-const': 'off',
-    '@typescript-eslint/no-array-constructor': 0,
-    '@typescript-eslint/no-base-to-string': 0,
-    '@typescript-eslint/no-confusing-non-null-assertion': 'error',
-    '@typescript-eslint/no-confusing-void-expression': 0,
-    'no-dupe-class-members': 'off',
-    '@typescript-eslint/no-dupe-class-members': 'error',
-    'no-duplicate-imports': 'off',
-    '@typescript-eslint/no-duplicate-imports': 0,
-    '@typescript-eslint/no-dynamic-delete': 0,
-    'no-empty-function': 'off',
-    '@typescript-eslint/no-empty-function': 0,
-    '@typescript-eslint/no-empty-interface': 1,
-    '@typescript-eslint/no-extra-non-null-assertion': 0,
-    'no-extra-parens': 'off',
-    '@typescript-eslint/no-extra-parens': 0,
-    'no-extra-semi': 'off',
-    '@typescript-eslint/no-extra-semi': 0,
-    '@typescript-eslint/no-extraneous-class': 0,
-    '@typescript-eslint/no-floating-promises': 0,
-    '@typescript-eslint/no-implicit-any-catch': 0,
-    'no-implied-eval': 'off',
-    '@typescript-eslint/no-implied-eval': 0,
-    '@typescript-eslint/no-inferrable-types': 0,
-    'no-invalid-this': 'off',
-    '@typescript-eslint/no-invalid-this': 'error',
-    '@typescript-eslint/no-invalid-void-type': 0,
-    'no-loop-func': 'off',
-    '@typescript-eslint/no-loop-func': 'error',
-    'no-loss-of-precision': 'off',
-    '@typescript-eslint/no-loss-of-precision': 0,
-    'no-magic-numbers': 'off',
-    '@typescript-eslint/no-magic-numbers': 0,
-    '@typescript-eslint/no-misused-new': 'error',
-    '@typescript-eslint/no-misused-promises': 0,
-    '@typescript-eslint/no-namespace': 1,
-    '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
-    '@typescript-eslint/no-parameter-properties': 'error',
-    'no-redeclare': 'off',
-    '@typescript-eslint/no-redeclare': 'error',
-    '@typescript-eslint/no-require-imports': 0,
-    'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': 'error',
-    '@typescript-eslint/no-this-alias': 'error',
-    'no-throw-literal': 'off',
-    '@typescript-eslint/no-type-alias': 0,
-    '@typescript-eslint/no-unnecessary-boolean-literal-compare': 0,
-    '@typescript-eslint/no-unnecessary-condition': 0,
-    '@typescript-eslint/no-unnecessary-qualifier': 0,
-    '@typescript-eslint/no-unnecessary-type-arguments': 0,
-    '@typescript-eslint/no-unnecessary-type-assertion': 0,
-    '@typescript-eslint/no-unnecessary-type-constraint': 0,
-    '@typescript-eslint/no-unsafe-assignment': 0,
-    '@typescript-eslint/no-unsafe-call': 0,
-    '@typescript-eslint/no-unsafe-member-access': 0,
-    '@typescript-eslint/no-unsafe-return': 0,
-    'no-unused-expressions': 'off',
-    '@typescript-eslint/no-unused-expressions': 'off',
-    'no-unused-vars': 'off',
-    'no-use-before-define': 'off',
-    'no-useless-constructor': 'off',
-    '@typescript-eslint/no-useless-constructor': 'error',
-    '@typescript-eslint/non-nullable-type-assertion-style': 0,
-    '@typescript-eslint/prefer-as-const': 0,
-    '@typescript-eslint/prefer-enum-initializers': 0,
-    '@typescript-eslint/prefer-for-of': 0,
-    '@typescript-eslint/prefer-function-type': 0,
-    '@typescript-eslint/prefer-includes': 0,
-    '@typescript-eslint/prefer-literal-enum-member': 0,
-    '@typescript-eslint/prefer-namespace-keyword': 0,
-    '@typescript-eslint/prefer-nullish-coalescing': 0,
-    '@typescript-eslint/prefer-optional-chain': 0,
-    '@typescript-eslint/prefer-readonly': 0,
-    '@typescript-eslint/prefer-readonly-parameter-types': 0,
-    '@typescript-eslint/prefer-reduce-type-parameter': 0,
-    '@typescript-eslint/prefer-regexp-exec': 0,
-    '@typescript-eslint/prefer-string-starts-ends-with': 0,
-    '@typescript-eslint/prefer-ts-expect-error': 0,
-    '@typescript-eslint/promise-function-async': 0,
-    quotes: 'off',
-    '@typescript-eslint/quotes': 0,
-    '@typescript-eslint/require-array-sort-compare': 0,
-    'require-await': 'off',
-    '@typescript-eslint/require-await': 0,
-    '@typescript-eslint/restrict-plus-operands': 0,
-    '@typescript-eslint/restrict-template-expressions': 0,
-    'no-return-await': 'off',
-    '@typescript-eslint/return-await': 0,
-    semi: 'off',
-    '@typescript-eslint/semi': 0,
-    'space-before-function-paren': 'off',
-    '@typescript-eslint/space-before-function-paren': 0,
-    'space-infix-ops': 'off',
-    '@typescript-eslint/space-infix-ops': 0,
-    '@typescript-eslint/strict-boolean-expressions': 0,
-    '@typescript-eslint/triple-slash-reference': 'error',
-    '@typescript-eslint/type-annotation-spacing': 'error',
-    '@typescript-eslint/typedef': 'error',
-    '@typescript-eslint/unbound-method': 0,
-    '@typescript-eslint/unified-signatures': 'error',
-    '@typescript-eslint/indent': 0,
-    // Makes no sense to allow type inferrence for expression parameters, but require typing the response
-    '@typescript-eslint/no-use-before-define': [
-      'error',
-      { functions: false, classes: true, variables: true, typedefs: true },
-    ],
-    camelcase: 0,
-    '@typescript-eslint/camelcase': 0,
-    '@typescript-eslint/no-var-requires': 0,
-    // Common abbreviations are known and readable
-    '@typescript-eslint/explicit-member-accessibility': 0,
-    '@typescript-eslint/interface-name-prefix': 0,
-    '@typescript-eslint/no-non-null-assertion': 0,
-    '@typescript-eslint/no-explicit-any': 0,
-    '@typescript-eslint/ban-types': 1,
-    '@typescript-eslint/explicit-module-boundary-types': 0,
-    '@typescript-eslint/naming-convention': 0,
-    '@typescript-eslint/no-unused-vars': 0,
-  },
-  settings: {
-    react: {
-      pragma: 'React',
-      version: 'detect',
-    },
-  },
-});
+module.exports = {
+	// 指定脚本的运行环境
+	env: {
+		browser: true,
+		es2021: true
+	},
+	root: true,
+	extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:prettier/recommended'],
+	parser: '@typescript-eslint/parser',
+	parserOptions: {
+		//使用额外的语言特性
+		ecmaFeatures: {
+			jsx: true
+		},
+		//启用ES高级语法支持
+		ecmaVersion: 12,
+		// module表示ECMAScript模块
+		sourceType: 'module'
+	},
+	settings: {
+		react: {
+			version: 'detect'
+		}
+	},
+	plugins: ['react', '@typescript-eslint'],
+	rules: {
+		'react/prop-types': ['off'],
+		'react/jsx-key': ['off'],
+		'prettier/prettier': 'error',
+		'no-unused-vars': 0, //定义了变量却没有在代码中使用
+		'@typescript-eslint/no-unused-vars': 1,
+		semi: 0, //缺少分号，行尾必须使用分号
+		curly: 0, //if 后必须包含 { ，单行 if 除外
+		'default-case': 2, //switch 语句必须包含 default
+		'max-depth': [2, 5], //最大块嵌套不能超过5层
+		'max-params': [2, 8], //函数的形参不能多于8个
+		'new-cap': 2, //new关键字后类名应首字母大写
+		'no-array-constructor': 2, //禁止使用Array构造函数，定义数组直接用最快捷的方式[1, 2, 3]
+		// "no-await-in-loop":2,//禁止将await写在循环里,循环属于同步操作，不该将await异步操作写在内部
+		'no-caller': 2, //禁止使用arguments.caller和arguments.callee，ES6中废弃了
+		'no-const-assign': 2, //禁止对const定义重新赋值
+		'no-delete-var': 2, //禁止对变量使用delete关键字，delete只适用于对象的属性，提醒使用的范围
+		'no-dupe-args': 2, //函数参数禁止重名
+		'no-empty-function': 2, //禁止空的function,保证写的每一个function都有用
+		'no-eval': 2, //禁止使用eval
+		'no-extra-semi': 2, //禁止额外的分号，有些地方没必要加分号比如if () {};这样就是错误的
+		// "no-global-assign":2,//禁止对全局变量赋值
+		'array-bracket-spacing': 0, // 数组方括号前后的空格使用规则
+		'array-bracket-newline': 0, // 数组方括号前后的换行符使用规则
+		'accessor-pairs': 2, // 设置了 setter ，必须相应设置 getter ，反之不必须
+		'array-callback-return': 2, // 数组的 map、filter、sort 等方法，回调函数必须有返回值
+		'array-element-newline': 0, // 每个数组项是否独占一行
+		'arrow-body-style': 0, // 箭头函数的书写规则
+		'arrow-spacing': 0, // 箭头函数的空格使用规则
+		'arrow-parens': 0, // 箭头函数的圆括号使用规则
+		'block-scoped-var': 2, // 不能在块外使用块作用域内 var 定义的变量
+		'block-spacing': 0, // 代码块花括号前后的空格规则
+		'for-direction': 2, // for 循环不得因方向错误造成死循环
+		'no-alert': 1, // 禁止 alert，
+		'no-duplicate-imports': 2, // 禁止重复 import
+		'no-empty-pattern': 2, // 禁止解构中出现空 {} 或 []
+		'no-extend-native': [2, { exceptions: ['Array', 'Object'] }], // 禁止扩展原生对象
+		'no-floating-decimal': 2, // 不允许使用 2. 或 .5 来表示数字，需要用 2、2.0、0.5 的格式
+		'no-implied-eval': 2, // 禁止在 setTimeout 和 setInterval 中传入字符串，因会触发隐式 eval
+		'no-mixed-spaces-and-tabs': 2, // 禁止混用空格和 tab 来做缩进，必须统一
+		'no-multi-assign': 2, // 禁止连等赋值
+		'no-multiple-empty-lines': [
+			2,
+			{
+				// 连续空行的数量限制
+				max: 3, // 文件内最多连续 3 个
+				maxEOF: 1, // 文件末尾最多连续 1 个
+				maxBOF: 1 // 文件头最多连续 1 个
+			}
+		],
+		'no-nested-ternary': 2, // 禁止嵌套的三元表达式
+		'no-octal': 2, // 禁止使用0开头的数字表示八进制
+		'no-redeclare': 2, // 禁止重复声明
+		'no-return-await': 2, // 禁止在 return 中使用 await
+		'no-return-assign': 2, // 禁止在return中赋值
+		'no-script-url': 2, // 禁止 location.href = 'javascript:void'
+		'no-self-assign': 2, // 禁止将自己赋值给自己
+		'no-shadow-restricted-names': 2, // 禁止使用保留字作为变量名
+		'no-unreachable': 2, // 禁止出现不可到达的代码，如在 return、throw 之后的代码
+		'no-useless-call': 2, // 禁止不必要的 call 和 apply
+		'no-useless-computed-key': 2, // 禁止使用不必要计算的key，如 var a = { ['0']: 0 }
+		'no-var': 2, // 禁止使用 var，必须用 let 或 const
+		'no-whitespace-before-property': 2, // 禁止属性前出现空格，如 foo. bar()
+		'no-with': 2, // 禁止 with
+		'nonblock-statement-body-position': 2, // 禁止 if 语句在没有花括号的情况下换行
+		'one-var': [
+			2,
+			{
+				// 是否允许使用逗号一次声明多个变量
+				const: 'never' // 所有 const 声明必须独占一行，不允许用逗号定义多个
+			}
+		],
+		'symbol-description': 2, // 创建 Symbol 的时候必须传入描述
+		yoda: 2 // 禁止Yoda格式的判断条件，如 if (true === a)，应使用 if (a === true)
+	}
+}

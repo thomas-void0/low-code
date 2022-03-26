@@ -3,3 +3,8 @@ dist
 /node_modules
 /vite.config.js
 /postcss.config.js
+/.eslintrc.js
+/stylelint.config.js
+/postcss.config.js
+/.babelrc
+/commitlint.config.js
