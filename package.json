@@ -7,6 +7,7 @@
     "build:test": "tsc && cross-env NODE_ENV=test vite build --mode test",
     "build": "tsc && cross-env NODE_ENV=production vite build --mode production",
     "lint": "eslint --ext .jsx,js,ts,tsx src/ --fix ./src --cache",
+		"lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
     "lint:style": "stylelint --cache --fix \"**/*.{less,postcss,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "preview": "vite preview"
