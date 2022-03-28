@@ -26,6 +26,7 @@ module.exports = {
 	rules: {
 		'react/prop-types': ['off'],
 		'react/jsx-key': ['off'],
+		'react/react-in-jsx-scope': ['off'],
 		'prettier/prettier': 'error',
 		'no-unused-vars': 0, //定义了变量却没有在代码中使用
 		'@typescript-eslint/no-unused-vars': 1,

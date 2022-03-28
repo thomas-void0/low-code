@@ -1,4 +1,3 @@
-import React from 'react'
 import { getEev } from '@/utils'
 
 function App() {
