@@ -8,3 +8,4 @@ dist
 /postcss.config.js
 /.babelrc
 /commitlint.config.js
+/vite.config.ts

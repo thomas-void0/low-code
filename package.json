@@ -3,14 +3,14 @@
 	"private": true,
 	"version": "0.0.0",
 	"scripts": {
-		"dev": "vite --mode development",
-		"build:test": "tsc && cross-env NODE_ENV=test vite build --mode test",
-		"build": "tsc && cross-env NODE_ENV=production vite build --mode production",
+		"start": "vite --mode development",
+		"build:test": "vite build --mode test",
+		"build": "vite build --mode production",
 		"lint": "eslint --ext .jsx,js,ts,tsx src/ --fix ./src --cache",
 		"lint-staged": "lint-staged",
 		"prepare": "husky install",
 		"lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
-		"lint:style": "stylelint --cache --fix \"**/*.{less,postcss,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
+		"lint:style": "stylelint --cache --fix \"**/*.{less,postcss,scss,css}\" --cache --cache-location node_modules/.cache/stylelint/",
 		"preview": "vite preview"
 	},
 	"lint-staged": {
@@ -40,7 +40,6 @@
 		"@typescript-eslint/parser": "^5.16.0",
 		"@vitejs/plugin-react": "^1.0.7",
 		"autoprefixer": "^10.4.4",
-		"cross-env": "^7.0.3",
 		"eslint": "^8.12.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-define-config": "^1.3.0",
