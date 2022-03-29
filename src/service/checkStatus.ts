@@ -1,6 +1,6 @@
-import { isProdMode } from '@/utils/env'
+import { getEev } from '@/utils'
 import { message, notification } from 'antd'
-import type { ErrorMessageMode } from './axiosType'
+import type { ErrorMessageMode } from '../types/axiosType'
 
 export enum SessionTimeoutProcessingEnum {
 	ROUTE_JUMP,
@@ -27,7 +27,7 @@ const codeMessage = {
 }
 
 export function checkStatus(
-	status: number,
+	status: keyof typeof codeMessage,
 	msg: string,
 	errorMessageMode: ErrorMessageMode = 'message'
 ): void {
@@ -39,7 +39,7 @@ export function checkStatus(
 		if (errorMessageMode === 'notification') {
 			notification.error({
 				message: `请求错误 ${status}`,
-				description: isProdMode() ? '请稍后再试' : errMessage
+				description: getEev() === 'production' ? '请稍后再试' : errMessage
 			})
 		} else if (errorMessageMode === 'message') {
 			message.error(errMessage)

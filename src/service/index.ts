@@ -6,7 +6,7 @@ import { ContentTypeEnum, RequestEnum, ResultEnum, VAxios } from './Axios'
 import { checkStatus } from './checkStatus'
 import { joinTimestamp, formatRequestDate } from './helper'
 import { isObject, isString } from 'lodash-es'
-import { OriginResult, RequestOptions } from './axiosType'
+import { OriginResult, RequestOptions } from '../types/axiosType'
 import { notification, message as antdMessage } from 'antd'
 import setXYZ from './setXYZ'
 
