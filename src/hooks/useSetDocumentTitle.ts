@@ -1,0 +1,27 @@
+// 配置document.title
+/* global process */
+import { useEffect } from 'react'
+
+const isNode =
+	typeof process !== 'undefined' && process.versions != null && process.versions.node != null
+
+export const isBrowser = () => {
+	return typeof window !== 'undefined' && typeof window.document !== 'undefined' && !isNode
+}
+
+function useSetDocumentTitle(
+	titleInfo: {
+		title: string
+		pageName: string
+	},
+	appDefaultTitle: string | false
+) {
+	const titleText = typeof titleInfo.pageName === 'string' ? titleInfo.title : appDefaultTitle
+	useEffect(() => {
+		if (isBrowser() && titleText) {
+			document.title = titleText
+		}
+	}, [titleInfo.title])
+}
+
+export default useSetDocumentTitle
