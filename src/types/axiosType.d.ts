@@ -28,8 +28,15 @@ export interface RequestOptions {
 // 原始数据类型
 export interface OriginResult<T = any> {
 	code: number | string
-	message: string
+	message?: string
+	msg?: string
 	data: T
+	success?: boolean
+	value?: {
+		code: string
+		data: T
+		message: string
+	}
 }
 
 // 转化结果类型

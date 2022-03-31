@@ -57,13 +57,9 @@ function alterMessage(options: RequestOptions, msg: string | undefined) {
 	}
 }
 
-/**
- * @description: 数据处理，方便区分多种处理方式
- */
+// 数据处理，方便区分多种处理方式
 const transform: AxiosTransform = {
-	/**
-	 * @description: 处理请求数据。如果数据不是预期格式，可直接抛出错误
-	 */
+	// 处理请求数据。如果数据不是预期格式，可直接抛出错误
 	transformRequestHook: (res: AxiosResponse<OriginResult>, options: RequestOptions) => {
 		const { isTransformResponse, isReturnNativeResponse } = options
 		// 是否返回原生响应头 比如：需要获取响应头时使用该属性
@@ -79,7 +75,6 @@ const transform: AxiosTransform = {
 		const { data } = res
 
 		if (!data) {
-			// return '[HTTP] Request has no return value';
 			alterMessage(options, '服务出错')
 			return {
 				success: false,
@@ -199,12 +194,10 @@ const transform: AxiosTransform = {
 		return config
 	},
 
-	/**
-	 * @description: 请求拦截器处理
-	 */
+	// 请求拦截器处理
 	requestInterceptors: (config, options) => {
 		// 请求之前处理config
-		// 添加XYZ
+		// 加密
 		if (config.method?.toLocaleLowerCase() === 'get') {
 			config.params = setEncryption(config.url, config.params)
 		}
@@ -222,16 +215,12 @@ const transform: AxiosTransform = {
 		return config
 	},
 
-	/**
-	 * @description: 响应拦截器处理
-	 */
+	// 响应拦截器处理
 	responseInterceptors: (res: AxiosResponse<any>) => {
 		return res
 	},
 
-	/**
-	 * @description: 响应错误处理
-	 */
+	// 响应错误处理
 	responseInterceptorsCatch: (error: any) => {
 		const { response, code, message, config } = error || {}
 		const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none'
@@ -272,9 +261,7 @@ const transform: AxiosTransform = {
 		return Promise.reject(error)
 	},
 
-	/**
-	 * @description 请求错误捕获
-	 */
+	// 请求错误捕获
 	requestCatchHook: e => {
 		return Promise.reject(e)
 	}
@@ -326,35 +313,19 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
 	)
 }
 
-// 网站版本号
-let versionCache: string | null = null
-let updateVersion: boolean = true
-
-export const requestGW = createAxios({
+// 走gateway接口
+export const request = createAxios({
 	withCredentials: true,
 	requestOptions: {
+		/* @ts-ignore */
 		urlPrefix: import.meta.env.VITE_GW_HOST as string
 	},
 	headers: {
 		'n-token': '342bdbf6864146f59730fbd6eace18f9'
-	},
-	transform: {
-		responseInterceptors(response) {
-			const version = response.headers['version'] || response.headers['Version']
-			if (versionCache && version && versionCache !== version && updateVersion) {
-				// 提示用户刷新页面
-				updateVersion = false
-			}
-
-			if (!versionCache) {
-				versionCache = version
-			}
-
-			return response
-		}
 	}
 })
 
-export const requestXYZ = createAxios({})
+//  请求老的走nginx的接口
+export const requestOld = createAxios({})
 
 export default createAxios
