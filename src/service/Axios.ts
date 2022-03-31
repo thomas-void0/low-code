@@ -4,7 +4,7 @@ import type {
 	OriginResult,
 	UploadFileParams,
 	TransformedResultType
-} from './axiosType'
+} from '../types/axiosType'
 import type { CreateAxiosOptions } from './axiosTransform'
 import qs from 'qs'
 import { AxiosCanceler } from './axiosCancel'
@@ -12,21 +12,17 @@ import { cloneDeep, isFunction } from 'lodash-es'
 
 export * from './axiosTransform'
 
-/**
- * @description: contentType
- */
+// Content-Type的枚举
 export enum ContentTypeEnum {
-	// json
+	// 使用json格式上传参数
 	JSON = 'application/json;charset=UTF-8',
-	// form-data qs
+	// 使用原始数据类型，用qs处理
 	FORM_URLENCODED = 'application/x-www-form-urlencoded;charset=UTF-8',
-	// form-data  upload
+	// 使用formData的方式传参
 	FORM_DATA = 'multipart/form-data;charset=UTF-8'
 }
 
-/**
- * @description: request method
- */
+// 请求方法的枚举
 export enum RequestEnum {
 	GET = 'GET',
 	POST = 'POST',
@@ -34,9 +30,7 @@ export enum RequestEnum {
 	DELETE = 'DELETE'
 }
 
-/**
- * @description: Request result set
- */
+// 请求结果设置
 export enum ResultEnum {
 	ERROR = 1,
 	TIMEOUT = '401',
@@ -45,9 +39,7 @@ export enum ResultEnum {
 	NotLoginCode = '000999'
 }
 
-/**
- * @description:  axios module
- */
+// axios模块
 export class VAxios {
 	private axiosInstance: AxiosInstance
 	private readonly options: CreateAxiosOptions
@@ -58,9 +50,7 @@ export class VAxios {
 		this.setupInterceptors()
 	}
 
-	/**
-	 * @description:  Create axios instance
-	 */
+	// 创建axios请求实例
 	private createAxios(config: CreateAxiosOptions): void {
 		this.axiosInstance = axios.create(config)
 	}
@@ -74,9 +64,7 @@ export class VAxios {
 		return this.axiosInstance
 	}
 
-	/**
-	 * @description: Reconfigure axios
-	 */
+	// 重新配置axios
 	configAxios(config: CreateAxiosOptions) {
 		if (!this.axiosInstance) {
 			return
@@ -84,9 +72,7 @@ export class VAxios {
 		this.createAxios(config)
 	}
 
-	/**
-	 * @description: Set general header
-	 */
+	// 设置通用头部
 	setHeader(headers: any): void {
 		if (!this.axiosInstance) {
 			return
@@ -94,9 +80,7 @@ export class VAxios {
 		Object.assign(this.axiosInstance.defaults.headers, headers)
 	}
 
-	/**
-	 * @description: Interceptor configuration
-	 */
+	// 拦截配置
 	private setupInterceptors() {
 		const transform = this.getTransform()
 		if (!transform) {
@@ -111,9 +95,9 @@ export class VAxios {
 
 		const axiosCanceler = new AxiosCanceler()
 
-		// Request interceptor configuration processing
+		// 请求拦截器配置处理
 		this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-			// If cancel repeat request is turned on, then cancel repeat request is prohibited
+			// 如果开启了取消重复请求，则禁止取消重复请求
 			const {
 				// @ts-ignore
 				headers: { ignoreCancelToken }
@@ -131,12 +115,12 @@ export class VAxios {
 			return config
 		}, undefined)
 
-		// Request interceptor error capture
+		// 请求拦截错误捕获
 		requestInterceptorsCatch &&
 			isFunction(requestInterceptorsCatch) &&
 			this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch)
 
-		// Response result interceptor processing
+		// 响应结果拦截器处理
 		this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
 			res && axiosCanceler.removePending(res.config)
 			if (responseInterceptors && isFunction(responseInterceptors)) {
@@ -145,15 +129,13 @@ export class VAxios {
 			return res
 		}, undefined)
 
-		// Response result interceptor error capture
+		// 响应拦截错误捕获
 		responseInterceptorsCatch &&
 			isFunction(responseInterceptorsCatch) &&
 			this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch)
 	}
 
-	/**
-	 * @description:  File Upload
-	 */
+	// 文件上传
 	uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
 		const formData = new window.FormData()
 		const customFilename = params.name || 'file'
@@ -190,7 +172,7 @@ export class VAxios {
 		})
 	}
 
-	// support form-data
+	// 支持formData
 	supportFormData(config: AxiosRequestConfig) {
 		const headers = config.headers || this.options.headers
 		const contentType = headers?.['Content-Type'] || headers?.['content-type']

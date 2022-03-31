@@ -1,51 +1,53 @@
+// 错误信息提示类型
 export type ErrorMessageMode = 'none' | 'notification' | 'message' | undefined
 
 export interface RequestOptions {
-	// Splicing request parameters to url
+	// 拼接请求参数
 	joinParamsToUrl?: boolean
-	// Format request parameter time
+	// 格式化请求时间
 	formatDate?: boolean
-	// Whether to process the request result
+	// 是否处理请求结果
 	isTransformResponse?: boolean
-	// Whether to return native response headers
-	// For example: use this attribute when you need to get the response headers
+	// 费否返回本机响应头
 	isReturnNativeResponse?: boolean
-	// Whether to join url
+	// 是否添加到url
 	joinPrefix?: boolean
-	// Interface address, use the default apiUrl if you leave it blank
+	// 接口地址，不填的话使用默认地址
 	apiUrl?: string
 	// 请求拼接路径
 	urlPrefix?: string
-	// Error message prompt type
+	// 错误信息提示类型
 	errorMessageMode?: ErrorMessageMode
-	// Whether to add a timestamp
+	// 是否添加一个时间戳
 	joinTime?: boolean
 	ignoreCancelToken?: boolean
-	// Whether to send token in header
+	// 是否在报头中发送token
 	withToken?: boolean
 }
 
+// 原始数据类型
 export interface OriginResult<T = any> {
 	code: number | string
 	message: string
 	data: T
 }
 
+// 转化结果类型
 export interface TransformedResultType<T = any> {
 	success: boolean
 	result: T
 	message: string
 }
 
-// multipart/form-data: upload file
+// 上传文件
 export interface UploadFileParams {
-	// Other parameters
+	// 其他参数
 	data?: Record<string, any>
-	// File parameter interface field name
+	// 文件参数接口字段名
 	name?: string
-	// file name
+	// 文件名类型
 	file: File | Blob
-	// file name
+	// 文件名
 	filename?: string
 	[key: string]: any
 }
