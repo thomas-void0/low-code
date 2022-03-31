@@ -7,6 +7,7 @@ export function joinTimestamp<T extends boolean>(
 	restful: T
 ): T extends true ? string : object
 
+//  添加时间戳
 // eslint-disable-next-line no-redeclare
 export function joinTimestamp(join: boolean, restful = false): string | object {
 	if (!join) {
@@ -19,9 +20,7 @@ export function joinTimestamp(join: boolean, restful = false): string | object {
 	return { _t: now }
 }
 
-/**
- * @description: Format request parameter time
- */
+// 格式化请求参数时间
 export function formatRequestDate(params: Record<string, any>) {
 	if (Object.prototype.toString.call(params) !== '[object Object]') {
 		return

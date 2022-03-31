@@ -1,10 +1,18 @@
 import axios, { AxiosRequestConfig, Canceler } from 'axios'
-import { isFunction } from 'lodash-es'
+import { isFunction, omit } from 'lodash-es'
 
 // 用于存储每个请求的标识和取消功能
 let pendingMap = new Map<string, Canceler>()
 
-export const getPendingUrl = (config: AxiosRequestConfig) => [config.method, config.url].join('&')
+// 判断两次的url是否一致
+export const getPendingUrl = (config: AxiosRequestConfig) => {
+	return [
+		config.method,
+		config.url,
+		JSON.stringify(omit(config.params, ['_t', 'xyz', 'nonce'])),
+		JSON.stringify(config.data)
+	].join('&')
+}
 
 export class AxiosCanceler {
 	// 添加请求

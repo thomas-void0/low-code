@@ -5,12 +5,12 @@ import type {
 	UploadFileParams,
 	TransformedResultType
 } from '../types/axiosType'
-import type { CreateAxiosOptions } from './axiosTransform'
+import type { CreateAxiosOptions } from '../types/axiosTransform'
 import qs from 'qs'
 import { AxiosCanceler } from './axiosCancel'
 import { cloneDeep, isFunction } from 'lodash-es'
 
-export * from './axiosTransform'
+export * from '../types/axiosTransform'
 
 // Content-Type的枚举
 export enum ContentTypeEnum {
@@ -36,7 +36,7 @@ export enum ResultEnum {
 	TIMEOUT = '401',
 	TYPE = 'success',
 	NotLoginText = 'Not logged in',
-	NotLoginCode = '000999'
+	NotLoginTextZh = '用户未登陆'
 }
 
 // axios模块

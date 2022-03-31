@@ -2,11 +2,6 @@ import { getEev } from '@/utils'
 import { message, notification } from 'antd'
 import type { ErrorMessageMode } from '../types/axiosType'
 
-export enum SessionTimeoutProcessingEnum {
-	ROUTE_JUMP,
-	PAGE_COVERAGE
-}
-
 const codeMessage = {
 	200: '服务器成功返回请求的数据',
 	201: '新建或修改数据成功',

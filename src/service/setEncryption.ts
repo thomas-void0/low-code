@@ -1,3 +1,4 @@
+// 参数加密
 import md5 from 'blueimp-md5'
 import sampleSize from 'lodash-es/sampleSize'
 
@@ -22,7 +23,7 @@ const gw = (url: string) => {
  * @param {string} url 请求地址
  * @param {object} data 请求数据
  */
-export default function setXYZ(url?: string, data = {}) {
+export default function setEncryption(url?: string, data: Record<string, any> = {}) {
 	if (!url) {
 		return {}
 	}

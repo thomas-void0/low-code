@@ -1,17 +1,18 @@
-// axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
-
+// axios配置
 import type { AxiosResponse } from 'axios'
-import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform'
+import type { AxiosTransform, CreateAxiosOptions } from '../types/axiosTransform'
 import { ContentTypeEnum, RequestEnum, ResultEnum, VAxios } from './Axios'
 import { checkStatus } from './checkStatus'
-import { joinTimestamp, formatRequestDate } from './helper'
-import { isObject, isString } from 'lodash-es'
+import { joinTimestamp, formatRequestDate } from './axiosUtils'
+import { isString } from 'lodash'
 import { OriginResult, RequestOptions } from '../types/axiosType'
 import { notification, message as antdMessage } from 'antd'
-import setXYZ from './setXYZ'
+import memoryConfig from '@/config/memoryConfig'
+import setEncryption from './setEncryption'
+import qs from 'qs'
 
 /**
- * Add the object as a parameter to the URL
+ * 将对象拼接到url上
  * @param baseUrl url
  * @param obj
  * @returns {string}
@@ -29,12 +30,31 @@ export function setObjToUrlParams(baseUrl: string, obj: any): string {
 	return /\?$/.test(baseUrl) ? baseUrl + parameters : baseUrl.replace(/\/?$/, '?') + parameters
 }
 
+export function is(val: unknown, type: string) {
+	return toString.call(val) === `[object ${type}]`
+}
+
+export function isObject(val: any): val is Record<any, any> {
+	return val !== null && is(val, 'Object')
+}
+
 export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
 	let key: string
 	for (key in target) {
 		src[key] = isObject(src[key]) ? deepMerge(src[key], target[key]) : (src[key] = target[key])
 	}
 	return src
+}
+
+function alterMessage(options: RequestOptions, msg: string | undefined) {
+	if (options.errorMessageMode === 'notification') {
+		notification.error({
+			message: '请求错误',
+			description: msg
+		})
+	} else if (options.errorMessageMode === 'message') {
+		antdMessage.error(msg)
+	}
 }
 
 /**
@@ -57,55 +77,65 @@ const transform: AxiosTransform = {
 		}
 		// 错误的时候返回
 		const { data } = res
+
 		if (!data) {
 			// return '[HTTP] Request has no return value';
-			throw new Error('请求出错，请稍后重试')
+			alterMessage(options, '服务出错')
+			return {
+				success: false,
+				result: null,
+				message: '服务出错'
+			}
 		}
+
 		//  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-		const { code, data: result, message } = data
+		const { code, data: result, message, value, msg } = data
 
 		// 这里逻辑可以根据项目进行修改
 		const successCode = ['000000', '1', 0, 1, 2000]
-		const hasSuccess = successCode.includes(code)
+		const hasSuccess = successCode.includes(code) || successCode.includes(value?.code as string)
+
 		if (hasSuccess) {
 			return {
 				success: true,
 				result,
-				message
+				message: message! || msg!
 			}
 		}
 
-		if (message === ResultEnum.NotLoginText || code === ResultEnum.NotLoginCode) {
-			// 没有登陆的情况
-			return
+		if (
+			value?.message === ResultEnum.NotLoginText ||
+			value?.message === ResultEnum.NotLoginTextZh
+		) {
+			window.location.href = memoryConfig.loginUrl
+			return {
+				success: false,
+				message: '',
+				result: null
+			}
 		}
 
 		// 在此处根据自己项目的实际情况对不同的code执行不同的操作
 		// 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
-		let timeoutMsg = message
+		let timeoutMsg = message || value?.message || msg
+
 		switch (code) {
 			case ResultEnum.TIMEOUT:
 				timeoutMsg = '参数错误'
-
 				break
 			default:
-				if (message) {
-					timeoutMsg = message
-				}
+				break
 		}
 
 		// errorMessageMode=‘notification’的时候会显示notification，而不是消息提示，用于一些比较重要的错误
 		// errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
-		if (options.errorMessageMode === 'notification') {
-			notification.error({
-				message: '请求错误',
-				description: timeoutMsg
-			})
-		} else if (options.errorMessageMode === 'message') {
-			antdMessage.error(timeoutMsg)
-		}
+		alterMessage(options, timeoutMsg)
 
-		throw new Error(timeoutMsg || '请求出错，请稍后重试')
+		return {
+			success: false,
+			result: null,
+			message: timeoutMsg || '请求出错，请稍后重试'
+		}
 	},
 
 	// 请求之前处理config
@@ -120,6 +150,7 @@ const transform: AxiosTransform = {
 			config.url = `${apiUrl}${config.url}`
 		}
 		const params = config.params || {}
+
 		const data = config.data || false
 		formatDate && data && !isString(data) && formatRequestDate(data)
 		if (config.method?.toUpperCase() === RequestEnum.GET) {
@@ -132,6 +163,17 @@ const transform: AxiosTransform = {
 				config.params = undefined
 			}
 		} else {
+			// post 默认json请求
+			if (
+				config.method?.toUpperCase() === RequestEnum.POST &&
+				!config.headers?.['Content-Type'] &&
+				!config.headers?.['content-type']
+			) {
+				config.headers = {
+					...config.headers,
+					'Content-Type': ContentTypeEnum.JSON
+				}
+			}
 			if (!isString(params)) {
 				formatDate && formatRequestDate(params)
 				if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
@@ -164,14 +206,16 @@ const transform: AxiosTransform = {
 		// 请求之前处理config
 		// 添加XYZ
 		if (config.method?.toLocaleLowerCase() === 'get') {
-			config.params = setXYZ(config.url, config.params)
+			config.params = setEncryption(config.url, config.params)
 		}
 
 		if (config.method?.toLocaleLowerCase() === 'post') {
-			if (options.headers?.['Content-Type'] === ContentTypeEnum.JSON) {
-				config.params = setXYZ(config.url)
-			} else if (options.headers?.['Content-Type'] === ContentTypeEnum.FORM_DATA) {
-				config.data = setXYZ(config.url, config.data)
+			const contentType = options.headers?.['Content-Type'] || options.headers?.['content-type']
+
+			if (contentType === ContentTypeEnum.JSON) {
+				config.params = setEncryption(config.url)
+			} else if (contentType === ContentTypeEnum.FORM_URLENCODED) {
+				config.data = setEncryption(config.url, config.data)
 			}
 		}
 
@@ -201,6 +245,7 @@ const transform: AxiosTransform = {
 			}
 			if (err?.includes('Network Error')) {
 				errMessage = '网络异常，请检查您的网络连接是否正常'
+				console.error(err)
 			}
 
 			if (errMessage) {
@@ -212,14 +257,26 @@ const transform: AxiosTransform = {
 				} else if (errorMessageMode === 'message') {
 					antdMessage.error(errMessage)
 				}
-				return Promise.reject(error)
+				return Promise.resolve({
+					success: false,
+					result: null,
+					message: 'test1'
+				})
 			}
 		} catch (e) {
 			throw new Error(e as unknown as string)
 		}
 
 		checkStatus(error?.response?.status, msg, errorMessageMode)
+
 		return Promise.reject(error)
+	},
+
+	/**
+	 * @description 请求错误捕获
+	 */
+	requestCatchHook: e => {
+		return Promise.reject(e)
 	}
 }
 
@@ -231,7 +288,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
 				// authentication schemes，e.g: Bearer
 				// authenticationScheme: 'Bearer',
 				authenticationScheme: '',
-				timeout: 10 * 1000,
+				timeout: 30 * 1000,
 				headers: { 'Content-Type': ContentTypeEnum.JSON },
 				// 如果是form-data格式
 				// headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
@@ -261,17 +318,43 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
 					ignoreCancelToken: true,
 					// 是否携带token
 					withToken: true
-				}
-			},
+				},
+				paramsSerializer: params => qs.stringify(params, { indices: false })
+			} as CreateAxiosOptions,
 			opt || {}
 		)
 	)
 }
 
-// other api url
-// export const otherHttp = createAxios({
-//   requestOptions: {
-//     apiUrl: 'xxx',
-//     urlPrefix: 'xxx',
-//   },
-// });
+// 网站版本号
+let versionCache: string | null = null
+let updateVersion: boolean = true
+
+export const requestGW = createAxios({
+	withCredentials: true,
+	requestOptions: {
+		urlPrefix: import.meta.env.VITE_GW_HOST as string
+	},
+	headers: {
+		'n-token': '342bdbf6864146f59730fbd6eace18f9'
+	},
+	transform: {
+		responseInterceptors(response) {
+			const version = response.headers['version'] || response.headers['Version']
+			if (versionCache && version && versionCache !== version && updateVersion) {
+				// 提示用户刷新页面
+				updateVersion = false
+			}
+
+			if (!versionCache) {
+				versionCache = version
+			}
+
+			return response
+		}
+	}
+})
+
+export const requestXYZ = createAxios({})
+
+export default createAxios
