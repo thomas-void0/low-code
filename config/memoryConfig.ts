@@ -1,4 +1,4 @@
-import { getEev } from '@/utils'
+import { getEev } from '../src/utils'
 
 const env = getEev()
 
