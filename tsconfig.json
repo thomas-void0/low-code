@@ -16,9 +16,11 @@
 		"noEmit": true,
 		"jsx": "react-jsx",
 		"paths": {
-			"@/*": ["./src/*"]
-		}
+			"@/*": ["./src/*"],
+			"@config/*": ["./config/*"]
+		},
+		"types": ["vite-plugin-svgr/client"]
 	},
-	"include": ["src"],
+	"include": ["src", "/config/*"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

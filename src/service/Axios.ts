@@ -10,7 +10,7 @@ import qs from 'qs'
 import { AxiosCanceler } from './axiosCancel'
 import { cloneDeep, isFunction } from 'lodash-es'
 
-export * from '../types/axiosTransform'
+// export * from '../types/axiosTransform'
 
 // Content-Type的枚举
 export enum ContentTypeEnum {

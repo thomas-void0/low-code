@@ -7,7 +7,7 @@ import { joinTimestamp, formatRequestDate } from './axiosUtils'
 import { isString } from 'lodash'
 import { OriginResult, RequestOptions } from '../types/axiosType'
 import { notification, message as antdMessage } from 'antd'
-import memoryConfig from '@/config/memoryConfig'
+import memoryConfig from '@config/memoryConfig'
 import setEncryption from './setEncryption'
 import qs from 'qs'
 
@@ -83,7 +83,6 @@ const transform: AxiosTransform = {
 			}
 		}
 
-		//  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
 		const { code, data: result, message, value, msg } = data
 
 		// 这里逻辑可以根据项目进行修改
@@ -93,8 +92,8 @@ const transform: AxiosTransform = {
 		if (hasSuccess) {
 			return {
 				success: true,
-				result,
-				message: message! || msg!
+				result: result || value?.data,
+				message: (message || msg || value?.message)!
 			}
 		}
 
