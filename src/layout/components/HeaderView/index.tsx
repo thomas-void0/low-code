@@ -4,6 +4,7 @@ import { Layout } from 'antd'
 import { MenuDataItem, PureSettings, WithFalse } from '../../types/typings'
 import clearNenuItem from '../../utils/clearNenuItem'
 import classNames from 'classnames'
+import TopNavHeader from '../TopNavHeader'
 
 const { Header } = Layout
 
@@ -53,10 +54,9 @@ const HeaderView: FC<HeaderViewProps> = props => {
 		const clearMenuData = clearNenuItem(noChildrenMenuData)
 
 		const defaultDom = (
-			// <TopNavHeader mode="horizontal" {...props} menuData={clearMenuData}>
-			// 	{headerContentRender && headerContentRender(props)}
-			// </TopNavHeader>
-			<div></div>
+			<TopNavHeader mode="horizontal" {...props} menuData={clearMenuData}>
+				{headerContentRender && headerContentRender(props)}
+			</TopNavHeader>
 		)
 
 		if (headerRender && typeof headerRender === 'function') {

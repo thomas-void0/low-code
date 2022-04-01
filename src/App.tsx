@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { getEev } from '@/utils'
 import { reqGetBrandList } from '@/api'
+import Header from '@/layout/components/HeaderView'
 
 function App() {
 	useEffect(() => {
@@ -10,6 +11,6 @@ function App() {
 	}, [])
 
 	console.log(getEev())
-	return <div>app</div>
+	return <Header />
 }
 export default App

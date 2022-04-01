@@ -39,12 +39,13 @@ const defaultRenderLogoAndTitle = (
 		return null
 	}
 
-	return (
-		<Link to="/">
-			{logoDom}
-			{props.collapsed ? null : titleDom}
-		</Link>
-	)
+	return <div>123</div>
+	// return (
+	// 	<Link to="/">
+	// 		{logoDom}
+	// 		{props.collapsed ? null : titleDom}
+	// 	</Link>
+	// )
 }
 
 // 抽离出来是为了防止 rightSize 经常改变导致菜单 render
