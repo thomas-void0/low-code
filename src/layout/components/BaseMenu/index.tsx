@@ -81,6 +81,7 @@ class MenuUtil {
 		this.props = props
 	}
 
+	// 获取菜单items
 	getNavMenuItems = (
 		menusData: MenuDataItem[] = [],
 		isChildren: boolean,
@@ -91,6 +92,7 @@ class MenuUtil {
 			.filter(item => item)
 	}
 
+	// 获取subMenu或Item
 	getSubMenuOrItem = (
 		item: MenuDataItem,
 		isChildren: boolean,
@@ -101,7 +103,7 @@ class MenuUtil {
 		if (Array.isArray(item.children) && item && item.children.length > 0) {
 			const name = item.name
 			const { subMenuItemRender, menu, iconPrefixes } = this.props
-			//  get defaultTitle by menuItemRender
+			//  获取默认title
 			const defaultTitle = item.icon ? (
 				<span className={`${prefixCls}-menu-item`} title={name}>
 					{!isChildren && getIcon(item.icon, iconPrefixes)}
@@ -113,7 +115,7 @@ class MenuUtil {
 				</span>
 			)
 
-			// subMenu only title render
+			// 子菜单只渲染标题
 			const title = subMenuItemRender
 				? subMenuItemRender({ ...item, isUrl: false }, defaultTitle)
 				: defaultTitle
@@ -138,6 +140,7 @@ class MenuUtil {
 		)
 	}
 
+	// 获取menuItem的path
 	getMenuItemPath = (item: MenuDataItem, isChildren: boolean, selectedKeys?: string[]) => {
 		const itemPath = this.conversionPath(item.path || '/')
 		const { location = { pathname: '/' }, onCollapse, menuItemRender, iconPrefixes } = this.props
@@ -178,6 +181,7 @@ class MenuUtil {
 		return defaultItem
 	}
 
+	// 转换路径
 	conversionPath = (path: string) => {
 		if (path && path.indexOf('http') === 0) {
 			return path
@@ -186,7 +190,39 @@ class MenuUtil {
 	}
 }
 
-const BaseMenu: FC<any> = () => {
+// 生成openKeys 的对象
+const getOpenKeysProps = (
+	openKeys: React.ReactText[] | false,
+	{ collapsed }: BaseMenuProps
+): {
+	openKeys?: undefined | string[]
+} => {
+	let openKeysProps = {}
+	if (openKeys && !collapsed) {
+		openKeysProps = {
+			openKeys
+		}
+	}
+	return openKeysProps
+}
+
+const BaseMenu: FC<BaseMenuProps> = props => {
+	const {
+		mode,
+		className,
+		handleOpenChange,
+		style,
+		menuData,
+		// matchMenuKeys,
+		iconfontUrl,
+		collapsed,
+		onSelect,
+		menu
+	} = props
+
+	// const [openKeys, setOpenKeys] = useMountControlledState<string[]>([], {
+	// 	onChange: handleOpenChange as any
+	// })
 	return <div></div>
 }
 
