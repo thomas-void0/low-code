@@ -1,4 +1,5 @@
-import React, { ComponentType, LazyExoticComponent } from 'react'
+import React, { ComponentType, LazyExoticComponent, CSSProperties } from 'react'
+import type { RouteComponentProps, match } from 'react-router-dom'
 
 export type WithFalse<T> = T | false
 
@@ -63,3 +64,18 @@ export type MenuDataItem<T extends ComponentType<any> = ComponentType<any>> = {
 	sensitive?: boolean | undefined
 	strict?: boolean | undefined
 }
+
+export type Route = {
+	routes?: Route[]
+	layout?: WithFalse<{
+		hasSiderMenu?: boolean
+		hasTopMenu?: boolean
+		contentStyle?: CSSProperties
+	}>
+} & MenuDataItem
+
+export type RouterTypes<P extends Record<string, any>> = {
+	computedMatch?: match<P>
+	route?: Route
+	location: RouteComponentProps['location'] | { pathname?: string }
+} & Omit<RouteComponentProps, 'location'>
