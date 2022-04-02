@@ -11,6 +11,6 @@ function App() {
 	}, [])
 
 	console.log(getEev())
-	return <Header />
+	return <Header matchMenuKeys={['2']} />
 }
 export default App

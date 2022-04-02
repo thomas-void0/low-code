@@ -4,6 +4,7 @@ import ResizeObserver from 'rc-resize-observer'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { PrivateSiderMenuProps, SiderMenuProps } from '../SilderMenu/SliderMenu'
+import BaseMenu from '../BaseMenu'
 
 export type TopNavHeaderProps = HeaderViewProps & SiderMenuProps & PrivateSiderMenuProps
 
@@ -104,7 +105,7 @@ const TopNavHeader: React.FC<TopNavHeaderProps> = props => {
 					</div>
 				)}
 				<div style={{ flex: 1 }} className={`${prefixCls}-menu`}>
-					{/* <BaseMenu
+					<BaseMenu
 						{...props}
 						{...props.menuProps}
 						menuProps={{
@@ -113,18 +114,19 @@ const TopNavHeader: React.FC<TopNavHeaderProps> = props => {
 						}}
 						menuItemRender={(renderItemProps, defaultDom) => {
 							return renderItemProps.routes ? (
-								<MenuPopover
-									renderItemProps={renderItemProps}
-									prefixCls={prefixCls}
-									overflowedIndicatorPopupClassName={overflowedIndicatorPopupClassName}
-								>
-									{defaultDom}
-								</MenuPopover>
+								<div>{defaultDom}</div>
 							) : (
+								// <MenuPopover
+								// 	renderItemProps={renderItemProps}
+								// 	prefixCls={prefixCls}
+								// 	overflowedIndicatorPopupClassName={overflowedIndicatorPopupClassName}
+								// >
+								// 	{defaultDom}
+								// </MenuPopover>
 								<Link to={renderItemProps.path!}>{defaultDom}</Link>
 							)
 						}}
-					/> */}
+					/>
 				</div>
 				{rightContentRender && <RightContent rightContentRender={rightContentRender} {...props} />}
 			</div>
