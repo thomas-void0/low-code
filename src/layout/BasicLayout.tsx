@@ -2,12 +2,14 @@ import './BasicLayout.less'
 import React, { CSSProperties } from 'react'
 import { MenuDataItem, Route, RouterTypes, WithFalse } from './types/typings'
 import { SiderMenuProps } from './components/SilderMenu/SliderMenu'
+import SiderMenu from './components/SilderMenu'
 import HeaderView, { HeaderViewProps } from './components/HeaderView'
 import type { BreadcrumbProps as AntdBreadcrumbProps } from 'antd/lib/breadcrumb'
 import { BaseMenuProps } from './components/BaseMenu'
-import { GetPageTitleProps } from './utils/getPageTitle'
+import { getPageTitleInfo, GetPageTitleProps } from './utils/getPageTitle'
 import { WaterMarkProps } from './components/WaterMark'
 import clearMenuItem from './utils/clearMenuItem'
+import { isBrowser } from '@/hooks/useSetDocumentTitle'
 // import React from 'react'
 
 export type LayoutBreadcrumbProps = {
@@ -67,6 +69,10 @@ export type BasicLayoutProps = Partial<RouterTypes<Route>> &
 		loading?: boolean
 	}
 
+export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
+	breadcrumb: Record<string, MenuDataItem>
+}
+
 // 渲染头部
 const headerRender = (props: BasicLayoutProps, matchMenuKeys: string[]): React.ReactNode => {
 	if (props.headerRender === false || props.pure) {
@@ -81,3 +87,86 @@ const headerRender = (props: BasicLayoutProps, matchMenuKeys: string[]): React.R
 
 	return <HeaderView matchMenuKeys={matchMenuKeys} {...props} menuData={clearMenuData} />
 }
+
+// 渲染SiderMenu
+const renderSiderMenu = (props: BasicLayoutProps, matchMenuKeys: string[]): React.ReactNode => {
+	const { menuRender } = props
+	if (menuRender === false || props.pure) return null
+
+	let { menuData } = props
+
+	const [key] = matchMenuKeys
+	if (key) {
+		menuData = props.menuData?.find(item => item.key === key)?.children || []
+	} else {
+		menuData = []
+	}
+
+	// 这里走了可以少一次循环
+	const clearMenuData = clearMenuItem(menuData || [])
+	if (clearMenuData && clearMenuData?.length < 1) {
+		return null
+	}
+
+	if (menuRender) {
+		const defaultDom = (
+			<SiderMenu matchMenuKeys={matchMenuKeys} {...props} menuData={clearMenuData} />
+		)
+
+		return menuRender(props, defaultDom)
+	}
+}
+
+const defaultPageTitleRender = (
+	pageProps: GetPageTitleProps,
+	props: BasicLayoutProps
+): {
+	title: string
+	pageName: string
+} => {
+	const { pageTitleRender } = props
+	const pageTitleInfo = getPageTitleInfo(pageProps)
+	if (pageTitleRender === false) {
+		return {
+			title: props.webTitle || '',
+			pageName: ''
+		}
+	}
+	if (pageTitleRender) {
+		const title = pageTitleRender(pageProps, pageTitleInfo.title, pageTitleInfo)
+		if (typeof title === 'string') {
+			return {
+				...pageTitleInfo,
+				title
+			}
+		}
+	}
+	return pageTitleInfo
+}
+
+const getPaddingLeft = (collapsed: boolean | undefined, siderWidth: number): number | undefined => {
+	return collapsed ? 48 : siderWidth
+}
+
+const BasicLayout: React.FC<BasicLayoutProps> = props => {
+	const {
+		children,
+		onCollapse: propsOnCollapse,
+		location = { pathname: '/' },
+		contentStyle,
+		route,
+		defaultCollapsed,
+		style,
+		siderWidth = 208,
+		menu,
+		menuDataRender,
+		userConfig,
+		loading
+	} = props || {}
+}
+
+BasicLayout.defaultProps = {
+	location: isBrowser() ? window.location : undefined
+}
+
+export default BasicLayout

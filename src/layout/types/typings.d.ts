@@ -4,7 +4,11 @@ import type { RouteComponentProps, match } from 'react-router-dom'
 export type WithFalse<T> = T | false
 
 export type ContentWidth = 'Fluid' | 'Fixed'
-
+export type RenderSetting = {
+	headerRender?: false
+	menuRender?: false
+	menuHeaderRender?: false
+}
 export type PureSettings = {
 	webTitle?: string
 	title?: WithFalse<string>
@@ -79,3 +83,5 @@ export type RouterTypes<P extends Record<string, any>> = {
 	route?: Route
 	location: RouteComponentProps['location'] | { pathname?: string }
 } & Omit<RouteComponentProps, 'location'>
+
+export type ProSettings = PureSettings & RenderSetting
