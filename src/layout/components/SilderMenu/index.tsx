@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import getFlatMenu from '../../utils/getFlatMenu'
 import { omit } from 'lodash-es'
-// import './index.less'
+import './index.less'
 import SiderMenu, { PrivateSiderMenuProps, SiderMenuProps } from './SliderMenu'
 
 const SiderMenuWrapper: React.FC<SiderMenuProps & PrivateSiderMenuProps> = props => {
