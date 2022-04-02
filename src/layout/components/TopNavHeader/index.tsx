@@ -3,8 +3,9 @@ import { HeaderViewProps } from '../HeaderView'
 import ResizeObserver from 'rc-resize-observer'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
+import { PrivateSiderMenuProps, SiderMenuProps } from '../SilderMenu/SliderMenu'
 
-export type TopNavHeaderProps = HeaderViewProps
+export type TopNavHeaderProps = HeaderViewProps & SiderMenuProps & PrivateSiderMenuProps
 
 // 默认渲染logo
 const defaultRenderLogo = (logo: React.ReactNode) => {

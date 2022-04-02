@@ -1,9 +1,18 @@
 // 浏览器空闲调度hook
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
+import useControlledState from './useControlledState'
 
 type Dispatch<A> = (value: A) => void
 
-function useMountControlledState<S>(initialState: S | (() => S)): [S, Dispatch<S>] {
+function useAnimationFrameState<S>(
+	initialState: S | (() => S),
+	option?: {
+		defaultValue?: S
+		value?: S
+		onChange?: (value: S, prevValue: S) => void
+		postState?: (value: S) => S
+	}
+): [S, Dispatch<S>] {
 	const mountRef = useRef<boolean>(false)
 	const frame = useRef<number>(0)
 
@@ -14,7 +23,7 @@ function useMountControlledState<S>(initialState: S | (() => S)): [S, Dispatch<S
 		}
 	}, [])
 
-	const [state, setState] = useState(initialState)
+	const [state, setState] = useControlledState(initialState, option)
 
 	const mountSetState: Dispatch<S> = (prevState: S) => {
 		cancelAnimationFrame(frame.current)
@@ -28,4 +37,4 @@ function useMountControlledState<S>(initialState: S | (() => S)): [S, Dispatch<S
 	return [state, mountSetState]
 }
 
-export default useMountControlledState
+export default useAnimationFrameState

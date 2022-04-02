@@ -5,6 +5,7 @@ import { MenuDataItem, PureSettings, WithFalse } from '../../types/typings'
 import clearNenuItem from '../../utils/clearNenuItem'
 import classNames from 'classnames'
 import TopNavHeader from '../TopNavHeader'
+import { PrivateSiderMenuProps, SiderMenuProps } from '../SilderMenu/SliderMenu'
 
 const { Header } = Layout
 
@@ -27,11 +28,11 @@ export type HeaderViewProps = {
 	menuData?: MenuDataItem[]
 	onMenuHeaderClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 	style?: React.CSSProperties
-	// menuHeaderRender?: SiderMenuProps['menuHeaderRender']
-	// collapsedButtonRender?: SiderMenuProps['collapsedButtonRender']
+	menuHeaderRender?: SiderMenuProps['menuHeaderRender']
+	collapsedButtonRender?: SiderMenuProps['collapsedButtonRender']
 } & PureSettings
 
-const HeaderView: FC<HeaderViewProps> = props => {
+const HeaderView: FC<HeaderViewProps & PrivateSiderMenuProps> = props => {
 	const {
 		menuData,
 		headerRender,

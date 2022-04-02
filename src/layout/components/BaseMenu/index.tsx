@@ -1,11 +1,14 @@
 // 基础菜单
-import React, { FC } from 'react'
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { MenuDataItem, PureSettings, Route, RouterTypes, WithFalse } from '../../types/typings'
 import Icon, { createFromIconfontCN } from '@ant-design/icons'
 import { MenuProps, Menu } from 'antd'
 import { defaultSettings } from '@config/defaultSettings'
 import isUrl from '@/layout/utils/isUrl'
 import isImg from '@/layout/utils/isImg'
+import useAnimationFrameState from '@/hooks/useAnimationFrameState'
+import classNames from 'classnames'
+import { PrivateSiderMenuProps } from '../SilderMenu/SliderMenu'
 
 const { SubMenu, ItemGroup } = Menu
 
@@ -206,24 +209,105 @@ const getOpenKeysProps = (
 	return openKeysProps
 }
 
-const BaseMenu: FC<BaseMenuProps> = props => {
+const BaseMenu: FC<BaseMenuProps & PrivateSiderMenuProps> = props => {
 	const {
 		mode,
 		className,
 		handleOpenChange,
 		style,
 		menuData,
-		// matchMenuKeys,
+		matchMenuKeys,
 		iconfontUrl,
 		collapsed,
 		onSelect,
 		menu
 	} = props
 
-	// const [openKeys, setOpenKeys] = useMountControlledState<string[]>([], {
-	// 	onChange: handleOpenChange as any
-	// })
-	return <div></div>
+	const [openKeys, setOpenKeys] = useAnimationFrameState<string[]>([], {
+		onChange: handleOpenChange as any
+	})
+	const [selectedKeys, setSelectedKeys] = useAnimationFrameState<string[] | undefined>([], {
+		onChange: onSelect ? keys => keys && onSelect(keys as any) : void 0
+	})
+
+	const matchMenuKeysStr = matchMenuKeys.join('-')
+
+	useEffect(() => {
+		if (matchMenuKeys) {
+			setOpenKeys(matchMenuKeys)
+			setSelectedKeys(matchMenuKeys)
+		}
+	}, [matchMenuKeysStr])
+
+	useEffect(() => {
+		// reset IconFont
+		if (iconfontUrl) {
+			IconFont = createFromIconfontCN({
+				scriptUrl: iconfontUrl
+			})
+		}
+	}, [iconfontUrl])
+
+	// 获取打开的key
+	const openKeysProps = useMemo(
+		() => getOpenKeysProps(openKeys, props),
+		[openKeys && openKeys.join(','), props.collapsed]
+	)
+
+	// 最后一次打开的keys
+	const lastOpenKeys = useRef<string[]>([])
+
+	useEffect(() => {
+		// if pathname can't match, use the nearest parent's key
+		if (matchMenuKeysStr !== (selectedKeys || []).join('-')) {
+			setSelectedKeys(matchMenuKeys)
+		}
+		if (matchMenuKeysStr !== (openKeys || []).join('-')) {
+			let newKeys: string[] = matchMenuKeys
+			if (menu?.autoClose === false) {
+				newKeys = Array.from(
+					new Set([...matchMenuKeys, ...(openKeys?.length ? openKeys : lastOpenKeys.current)])
+				)
+			}
+			setOpenKeys(newKeys)
+		}
+		if (collapsed) {
+			lastOpenKeys.current = openKeys
+		}
+	}, [matchMenuKeysStr, collapsed])
+
+	// 创建一个菜单实例对象
+	const [menuUtils] = useState(() => new MenuUtil(props))
+
+	const cls = classNames(className, {
+		'top-nav-menu': mode === 'horizontal'
+	})
+
+	menuUtils.props = props
+
+	// 最终的数据
+	const finallyData = props.postMenuData ? props.postMenuData(menuData) : menuData
+
+	if (finallyData && finallyData.length < 1) {
+		return null
+	}
+
+	return (
+		<Menu
+			{...openKeysProps}
+			key="Menu"
+			mode={mode}
+			inlineIndent={16}
+			theme="light"
+			selectedKeys={selectedKeys}
+			style={style}
+			className={cls}
+			onOpenChange={setOpenKeys}
+			{...props.menuProps}
+		>
+			{menuUtils.getNavMenuItems(finallyData, false, selectedKeys)}
+		</Menu>
+	)
 }
 
 export default BaseMenu
