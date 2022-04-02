@@ -113,6 +113,7 @@ const TopNavHeader: React.FC<TopNavHeaderProps> = props => {
 							overflowedIndicatorPopupClassName
 						}}
 						menuItemRender={(renderItemProps, defaultDom) => {
+							console.log('huhuuuhuhu', renderItemProps, defaultDom)
 							return renderItemProps.routes ? (
 								<div>{defaultDom}</div>
 							) : (

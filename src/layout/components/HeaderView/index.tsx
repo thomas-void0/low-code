@@ -2,7 +2,7 @@
 import React, { FC } from 'react'
 import { Layout } from 'antd'
 import { MenuDataItem, PureSettings, WithFalse } from '../../types/typings'
-import clearNenuItem from '../../utils/clearNenuItem'
+import clearNenuItem from '../../utils/clearMenuItem'
 import classNames from 'classnames'
 import TopNavHeader from '../TopNavHeader'
 import { PrivateSiderMenuProps, SiderMenuProps } from '../SilderMenu/SliderMenu'

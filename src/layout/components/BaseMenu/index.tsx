@@ -169,7 +169,6 @@ class MenuUtil {
 				</span>
 			)
 		}
-
 		if (menuItemRender) {
 			const renderItemProps = {
 				...item,
