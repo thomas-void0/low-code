@@ -41,13 +41,12 @@ const defaultRenderLogoAndTitle = (
 		return null
 	}
 
-	return <div>123</div>
-	// return (
-	// 	<Link to="/">
-	// 		{logoDom}
-	// 		{props.collapsed ? null : titleDom}
-	// 	</Link>
-	// )
+	return (
+		<Link to="/">
+			{logoDom}
+			{props.collapsed ? null : titleDom}
+		</Link>
+	)
 }
 
 // 抽离出来是为了防止 rightSize 经常改变导致菜单 render
@@ -113,7 +112,6 @@ const TopNavHeader: React.FC<TopNavHeaderProps> = props => {
 							overflowedIndicatorPopupClassName
 						}}
 						menuItemRender={(renderItemProps, defaultDom) => {
-							console.log('huhuuuhuhu', renderItemProps, defaultDom)
 							return renderItemProps.routes ? (
 								<div>{defaultDom}</div>
 							) : (

@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import classNames from 'classnames'
-import getFlatMenu from '../../utils/getFlatMenu'
-import { omit } from 'lodash-es'
-import './index.less'
 import SiderMenu, { PrivateSiderMenuProps, SiderMenuProps } from './SliderMenu'
+import MenuContext from '../../context/MenuContext'
+import getFlatMenu from '../../utils/getFlatMenu'
+import { omit } from 'lodash'
+import './index.less'
 
 const SiderMenuWrapper: React.FC<SiderMenuProps & PrivateSiderMenuProps> = props => {
 	const { menuData, style, className, hide, prefixCls, matchMenuKeys } = props
+	const { setFlatMenuKeys } = MenuContext.usePicker(['setFlatMenuKeys'])
 
 	useEffect(() => {
 		if (!menuData || menuData.length < 1) {
@@ -14,9 +16,8 @@ const SiderMenuWrapper: React.FC<SiderMenuProps & PrivateSiderMenuProps> = props
 		}
 		// 当 menu data 改变的时候重新计算这两个参数
 		const newFlatMenus = getFlatMenu(menuData)
-		console.log('newFlatMenus===>', newFlatMenus)
 		const animationFrameId = requestAnimationFrame(() => {
-			// setFlatMenuKeys(Object.keys(newFlatMenus))
+			setFlatMenuKeys(Object.keys(newFlatMenus))
 		})
 		return () => window.cancelAnimationFrame && window.cancelAnimationFrame(animationFrameId)
 	}, [matchMenuKeys.join('-')])

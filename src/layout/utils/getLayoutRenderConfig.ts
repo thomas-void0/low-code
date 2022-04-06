@@ -10,6 +10,7 @@ const getLayoutRenderConfig = (currentPathConfig: { layout: WithFalse<Route['lay
 	}
 
 	if (currentPathConfig?.layout?.hasSiderMenu === false) {
+		console.log('run')
 		layoutRender.menuRender = false
 	}
 

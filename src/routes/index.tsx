@@ -25,15 +25,27 @@ const routes: Route[] = [
 						exact: true
 					},
 					{
+						name: 'home1',
 						path: '/dashboard/home',
 						component: lazyLoad(() => import('@/pages/Home')),
 						exact: true,
-						name: '头条',
 						icon: 'icon-toutiao',
 						layout: {
 							contentStyle: {
 								background: 'var(--layout-sider-background-light)',
 								minWidth: '1440px'
+							}
+						}
+					},
+					{
+						name: 'home2',
+						path: '/dashboard/home2',
+						component: lazyLoad(() => import('@/pages/Home2')),
+						exact: true,
+						icon: 'icon-gdt',
+						layout: {
+							contentStyle: {
+								background: 'var(--layout-sider-background-light)'
 							}
 						}
 					}

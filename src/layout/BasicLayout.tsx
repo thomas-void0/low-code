@@ -130,6 +130,15 @@ const renderSiderMenu = (props: BasicLayoutProps, matchMenuKeys: string[]): Reac
 
 		return menuRender(props, defaultDom)
 	}
+
+	return (
+		<SiderMenu
+			matchMenuKeys={matchMenuKeys}
+			{...props}
+			// 这里走了可以少一次循环
+			menuData={clearMenuData}
+		/>
+	)
 }
 
 const defaultPageTitleRender = (
@@ -220,7 +229,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 
 	// 当前选中的menu，一般不会为空
 	const currentMenu = (matchMenus[matchMenus.length - 1] || {}) as ProSettings & MenuDataItem
-
 	const currentMenuLayoutProps = useCurrentMenuLayoutProps(currentMenu)
 
 	const { fixSiderbar } = {

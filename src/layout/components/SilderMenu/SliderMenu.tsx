@@ -1,11 +1,14 @@
-import { WithFalse } from '@/layout/types/typings'
-import { Menu, SiderProps, Layout } from 'antd'
 import React, { CSSProperties } from 'react'
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
-import BaseMenu, { BaseMenuProps } from '../BaseMenu'
+import { Layout, Menu } from 'antd'
 import classNames from 'classnames'
-import { Link } from 'react-router-dom'
+import type { SiderProps } from 'antd/lib/layout/Sider'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 
+import './index.less'
+import BaseMenu, { BaseMenuProps } from '../BaseMenu'
+import MenuContext from '../../context/MenuContext'
+import { Link } from 'react-router-dom'
+import { WithFalse } from '@/layout/types/typings'
 const { Sider } = Layout
 
 export type SiderMenuProps = {
@@ -59,6 +62,7 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = props => {
 	} = props
 
 	const baseClassName = `${prefixCls}-sider`
+	const { flatMenuKeys } = MenuContext.useContainer()
 	const siderClassName = classNames(`${baseClassName}`, {
 		[`${baseClassName}-fixed`]: fixSiderbar,
 		[`${baseClassName}-layout-mix`]: true,
@@ -66,7 +70,7 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = props => {
 	})
 
 	const extraDom = menuExtraRender && menuExtraRender(props)
-	const menuDom = menuContentRender !== false && (
+	const menuDom = menuContentRender !== false && flatMenuKeys && (
 		<BaseMenu
 			{...props}
 			key="base-menu"
