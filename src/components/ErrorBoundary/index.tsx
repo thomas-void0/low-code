@@ -13,6 +13,7 @@ export default class ErrorBoundary extends React.Component {
 	}
 
 	componentDidCatch() {
+		// 考虑在这里做一下日志上报
 		console.log('catch')
 	}
 
