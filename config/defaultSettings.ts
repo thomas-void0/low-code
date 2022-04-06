@@ -8,5 +8,5 @@ export const defaultSettings = {
 		autoClose: false
 	},
 	logo: '/logo.svg',
-	webTitle: '新榜海汇'
+	webTitle: '新榜kol'
 }

@@ -1,36 +1,44 @@
-/*需要重写antd的样式时，在这里覆盖*/
+// 需要重写antd的样式时，在这里覆盖
 
 @ant-prefix: ant;
-
-/*Color*/
-
+// Color
 @white: #fff;
 @black: #000;
 @heading-color: fade(@black, 85%);
+// Radius
 @border-radius-base: 4px;
 
+// Text
 @text-color-inverse: @black;
-@text-color: #181a1a;
-@text-color-secondary: #3d4242;
-@text-color-third: #626a6a;
-@text-color-fourth: #889191;
-@text-color-fifth: #afb6b6;
+@text-color: #181a1a; // 一级文本
+@text-color-secondary: #3d4242; // 二级文本
+@text-color-third: #626a6a; // 三级文本
+@text-color-fourth: #889191; // 四级文本
+@text-color-fifth: #afb6b6; // 五级文本（失效、暗提示）
 @text-selection-bg: var(--primary-4);
 
+// Disabled states
 @disabled-color: #626a6a;
 @disabled-bg: #eceeee;
 
+// Buttons
 @btn-primary-color: #fff;
 
+// Background color for `<body>`
 @body-background: #fff;
 
-/*@see https://ant.design/docs/spec/font-cn#%E5%AD%97%E9%98%B6%E4%B8%8E%E8%A1%8C%E9%AB%98*/
+// https://ant.design/docs/spec/font-cn#%E5%AD%97%E9%98%B6%E4%B8%8E%E8%A1%8C%E9%AB%98
 @line-height-base: 1.6667;
 
+// Base background color for most components
 @component-background: #fff;
 
+// Input
 @input-disabled-color: @disabled-color;
 
+// Link
+
+// Table
 @table-header-bg: hsla(180, 16%, 94%, 1);
 @table-header-sort-active-bg: hsla(180, 9%, 89%, 1);
 @table-selected-row-hover-bg: @table-header-sort-active-bg;
@@ -41,8 +49,10 @@
 @table-row-odd-hover-bg: hsla(180, 23%, 97%, 1);
 @table-row-even-hover-bg: hsla(180, 16%, 94%, 1);
 
+// Empty
 @empty-color: fade(#000, 50%);
 
+// Layout
 @layout-body-background: #f0f2f5;
 @layout-header-background: #001529;
 @layout-header-height: 64px;
@@ -60,12 +70,14 @@
 @layout-trigger-color-light: @text-color;
 @layout-sider-background-light: hsla(180, 23%, 97%, 1);
 
+// Border Color
 @border-color-base: #e1e6e6;
-@border-color-split: hsv(0, 0, 94%);
+@border-color-split: hsv(0, 0, 94%); // split border inside a component
 @border-color-inverse: @white;
-@border-width-base: 1px;
-@border-style-base: solid;
+@border-width-base: 1px; // width of the border for a component
+@border-style-base: solid; // style of a components border
 
+// Font
 @font-size-base: 14px;
 @font-size-lg: @font-size-base + 2px;
 @font-size-sm: 12px;

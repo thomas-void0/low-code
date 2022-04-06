@@ -23,5 +23,5 @@ module.exports = {
 		'declaration-colon-space-before': 'never',
 		'unit-no-unknown': [true, { ignoreUnits: ['rpx'] }]
 	},
-	ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts']
+	ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts', './src/assets/css/*.less']
 }

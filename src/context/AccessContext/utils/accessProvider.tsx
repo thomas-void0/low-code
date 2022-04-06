@@ -1,5 +1,5 @@
 import GlobalContext from '@/context/GlobalContext'
-import { MenuDataItem } from '@/layouts/ProLayout/typings'
+import { MenuDataItem } from '@/layout/types/typings'
 import React, { useMemo } from 'react'
 import accessFactory from '../access'
 import AccessContext, { AccessInstance } from './accessContext'
@@ -14,11 +14,12 @@ interface Props {
 
 const AccessProvider: React.FC<Props> = props => {
 	const { children, routes } = props
-
-	// globalContext
+	// // globalContext
 	const { initialState } = GlobalContext.usePicker(['initialState'])
 
 	const access: AccessInstance = useMemo(() => accessFactory(initialState), [initialState])
+
+	console.log(12341324, initialState)
 
 	return (
 		<AccessContext.Provider value={access}>

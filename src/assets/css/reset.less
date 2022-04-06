@@ -1,0 +1,38 @@
+html,
+body,
+#root {
+	min-width: 1024px;
+	height: 100%;
+}
+
+#nprogress {
+	.bar {
+		height: 4px;
+		background: var(--primary-color);
+		border-radius: 4px;
+		.peg {
+			display: none;
+		}
+	}
+}
+
+@font-face {
+	font-weight: normal;
+	font-family: 'DINPro';
+	font-style: normal;
+	src: local('DINPro Medium'), url('/DINPro-Medium.otf');
+	font-display: swap;
+}
+
+body {
+	font-family: 'DINPro', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif,
+		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
+	text-rendering: auto;
+	-webkit-font-smoothing: auto;
+	-moz-osx-font-smoothing: auto;
+}
+
+p {
+	margin-bottom: 0 !important;
+}

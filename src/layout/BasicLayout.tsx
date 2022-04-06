@@ -11,7 +11,6 @@ import { WaterMarkProps } from './components/WaterMark'
 import clearMenuItem from './utils/clearMenuItem'
 import useSetDocumentTitle, { isBrowser } from '@/hooks/useSetDocumentTitle'
 import { ConfigProvider, Layout } from 'antd'
-import { useInitialState } from '@/context/GlobalContext'
 import getMenuData from './utils/getMenuData'
 import { AccessContext, traverseModifyRoutes } from '@/context/AccessContext'
 import getMatchMenu from './utils/getMatchMenu'
@@ -26,6 +25,7 @@ import RouteContext from './context/RouteContext'
 import PageLoading from '@/components/Loading'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { WithExceptionOpChildren } from './components/WithExceptionOpChildren'
+import GlobalContext from '@/context/GlobalContext'
 
 export type LayoutBreadcrumbProps = {
 	minLength?: number
@@ -182,7 +182,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 	const context = useContext(ConfigProvider.ConfigContext)
 	const prefixCls = props.prefixCls ?? context.getPrefixCls('pro')
 
-	const initialState = useInitialState()
+	const { initialState } = GlobalContext.usePicker(['initialState'])
 
 	const accessContext = React.useContext(AccessContext)
 

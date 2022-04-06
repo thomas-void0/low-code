@@ -1,6 +1,6 @@
 const path = require('path')
 const svgrPlugin = require('vite-plugin-svgr')
-import { ConfigEnv, UserConfig } from 'vite'
+import { ConfigEnv, loadEnv, UserConfig } from 'vite'
 import legacy from '@vitejs/plugin-legacy'
 import windiCSS from 'vite-plugin-windicss'
 import react from '@vitejs/plugin-react'
@@ -8,8 +8,12 @@ import { HOST, PORT } from './config/constant'
 import proxyList from './config/proxy'
 
 // https://vitejs.dev/config/
-export default ({ command }: ConfigEnv): UserConfig => {
+export default ({ command, mode }: ConfigEnv): UserConfig => {
 	const isBuild = command === 'build'
+	const root = process.cwd()
+	const env = loadEnv(mode, root)
+
+	const { VITE_PUBLIC_PATH } = env
 
 	const _plugins = [
 		react(),
@@ -25,7 +29,10 @@ export default ({ command }: ConfigEnv): UserConfig => {
 	}
 
 	return {
+		root: root,
+		base: VITE_PUBLIC_PATH,
 		plugins: _plugins,
+		envPrefix: 'VITE_',
 		resolve: {
 			alias: [
 				{ find: '@', replacement: path.resolve(__dirname, './src') },
@@ -38,6 +45,13 @@ export default ({ command }: ConfigEnv): UserConfig => {
 					replacement: `${path.resolve(__dirname, './node_modules')}/`
 				}
 			]
+		},
+		css: {
+			preprocessorOptions: {
+				less: {
+					javascriptEnabled: true
+				}
+			}
 		},
 		server: {
 			host: HOST,

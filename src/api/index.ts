@@ -20,3 +20,10 @@ export async function getRoleMenu() {
 		url: '/api/nr-trade-security/xdnphb/adinsight/security/menu/getRoleMenu'
 	})
 }
+
+// 退出登录
+export async function loginOut() {
+	return request.post({
+		url: '/nr/user/login/loginOut'
+	})
+}
