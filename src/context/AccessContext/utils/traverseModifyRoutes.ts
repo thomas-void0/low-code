@@ -1,4 +1,4 @@
-import { MenuDataItem } from '@/layouts/ProLayout/typings'
+import { MenuDataItem } from '@/layout/types/typings'
 
 type Routes = MenuDataItem[]
 

@@ -1,4 +1,4 @@
-import { isDevMode } from '@/utils/env'
+import { getEev } from '@/utils'
 import React, { useContext } from 'react'
 import AccessContext, { AccessInstance as AccessInstanceType } from './accessContext'
 
@@ -18,7 +18,7 @@ export interface AccessProps {
 export const Access: React.FC<AccessProps> = props => {
 	const { accessible, fallback, children } = props
 
-	if (isDevMode() && typeof accessible === 'function') {
+	if (getEev() === 'development' && typeof accessible === 'function') {
 		console.warn(
 			'[access]: provided "accessible" prop is a function named "' +
 				(accessible as any).name +

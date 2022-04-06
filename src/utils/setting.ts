@@ -1,4 +1,3 @@
-import type { ProSettings } from '@/layouts/ProLayout/defaultSettings'
 import type { Theme } from 'antd/es/config-provider/context.d'
 
 export const themeName = 'ant-theme'
@@ -21,7 +20,7 @@ export const breakpoints = {
 
 export const iconfontUrl = '//at.alicdn.com/t/font_2415908_rvf6pq8rl6.js'
 
-export const defaultSettings: ProSettings = {
+export const defaultSettings = {
 	contentWidth: 'Fluid',
 	fixedHeader: true,
 	fixSiderbar: true,
