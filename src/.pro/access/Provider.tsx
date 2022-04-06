@@ -6,6 +6,8 @@ import { MenuDataItem } from '../typings/menu'
 import AccessContext, { AccessInstance } from './context'
 import traverseModifyRoutes from './traverseModifyRoutes'
 
+const { Provider } = AccessContext
+
 type Routes = MenuDataItem[]
 
 interface Props {
@@ -16,13 +18,12 @@ interface Props {
 const AccessProvider: React.FC<Props> = props => {
 	const { children, routes } = props
 
-	// globalContext
 	const { initialState } = GlobalContext.usePicker(['initialState'])
 
 	const access: AccessInstance = useMemo(() => accessFactory(initialState), [initialState])
 
 	return (
-		<AccessContext.Provider value={access}>
+		<Provider value={access}>
 			{/* @ts-ignore */}
 			{React.cloneElement(children, {
 				// @ts-ignore
@@ -30,7 +31,7 @@ const AccessProvider: React.FC<Props> = props => {
 				routes: traverseModifyRoutes(routes, access),
 				loading: initialState.loading
 			})}
-		</AccessContext.Provider>
+		</Provider>
 	)
 }
 

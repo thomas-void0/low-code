@@ -1,11 +1,11 @@
 // axios配置
 import type { AxiosResponse } from 'axios'
-import type { AxiosTransform, CreateAxiosOptions } from '../types/axiosTransform'
+import type { AxiosTransform, CreateAxiosOptions } from '../typings/axiosTransform'
 import { ContentTypeEnum, RequestEnum, ResultEnum, VAxios } from './Axios'
 import { checkStatus } from './checkStatus'
 import { joinTimestamp, formatRequestDate } from './axiosUtils'
 import { isString } from 'lodash'
-import { OriginResult, RequestOptions } from '../types/axiosType'
+import { OriginResult, RequestOptions } from '../typings/axiosType'
 import { notification, message as antdMessage } from 'antd'
 import memoryConfig from '@config/memoryConfig'
 import setEncryption from './setEncryption'

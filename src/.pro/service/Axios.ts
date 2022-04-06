@@ -4,13 +4,13 @@ import type {
 	OriginResult,
 	UploadFileParams,
 	TransformedResultType
-} from '../types/axiosType'
-import type { CreateAxiosOptions } from '../types/axiosTransform'
+} from '../typings/axiosType'
+import type { CreateAxiosOptions } from '../typings/axiosTransform'
 import qs from 'qs'
 import { AxiosCanceler } from './axiosCancel'
 import { cloneDeep, isFunction } from 'lodash-es'
 
-// export * from '../types/axiosTransform'
+// export * from '../typings/axiosTransform'
 
 // Content-Type的枚举
 export enum ContentTypeEnum {

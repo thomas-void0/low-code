@@ -1,6 +1,6 @@
 import { getEev } from '@/utils'
 import { message, notification } from 'antd'
-import type { ErrorMessageMode } from '../types/axiosType'
+import type { ErrorMessageMode } from '../typings/axiosType'
 
 const codeMessage = {
 	200: '服务器成功返回请求的数据',
