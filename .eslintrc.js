@@ -42,7 +42,7 @@ module.exports = {
 		'no-const-assign': 2, //禁止对const定义重新赋值
 		'no-delete-var': 2, //禁止对变量使用delete关键字，delete只适用于对象的属性，提醒使用的范围
 		'no-dupe-args': 2, //函数参数禁止重名
-		'no-empty-function': 2, //禁止空的function,保证写的每一个function都有用
+		'no-empty-function': 0, //禁止空的function,保证写的每一个function都有用
 		'no-eval': 2, //禁止使用eval
 		'no-extra-semi': 2, //禁止额外的分号，有些地方没必要加分号比如if () {};这样就是错误的
 		// "no-global-assign":2,//禁止对全局变量赋值
