@@ -1,15 +1,16 @@
 import React, { useRef, useState } from 'react'
-import { HeaderViewProps } from '../HeaderView'
-import ResizeObserver from 'rc-resize-observer'
-import { Link } from 'react-router-dom'
 import classNames from 'classnames'
-import { PrivateSiderMenuProps, SiderMenuProps } from '../SilderMenu/SliderMenu'
+import ResizeObserver from 'rc-resize-observer'
+import './index.less'
 import BaseMenu from '../BaseMenu'
+import { SiderMenuProps, PrivateSiderMenuProps } from '../SiderMenu/SiderMenu'
+import { HeaderViewProps } from '../HeaderView'
+import { Link } from 'react-router-dom'
+import MenuPopover from './MenuPopover'
 
 export type TopNavHeaderProps = HeaderViewProps & SiderMenuProps & PrivateSiderMenuProps
 
-// 默认渲染logo
-const defaultRenderLogo = (logo: React.ReactNode) => {
+const defaultRenderLogo = (logo: React.ReactNode): React.ReactNode => {
 	if (typeof logo === 'string') {
 		return <img src={logo} alt="logo" />
 	}
@@ -20,12 +21,11 @@ const defaultRenderLogo = (logo: React.ReactNode) => {
 }
 
 const defaultRenderLogoAndTitle = (
-	props,
+	props: SiderMenuProps,
 	renderKey: string = 'menuHeaderRender'
 ): React.ReactNode => {
 	const { logo, title } = props
 	const renderFunction = props[renderKey || '']
-
 	if (renderFunction === false) {
 		return null
 	}
@@ -33,7 +33,7 @@ const defaultRenderLogoAndTitle = (
 	const titleDom = <h1>{title}</h1>
 
 	if (renderFunction) {
-		// 折叠的时候，不渲染title
+		// when collapsed, no render title
 		return renderFunction(logoDom, props.collapsed ? null : titleDom, props)
 	}
 
@@ -49,7 +49,9 @@ const defaultRenderLogoAndTitle = (
 	)
 }
 
-// 抽离出来是为了防止 rightSize 经常改变导致菜单 render
+/**
+ * 抽离出来是为了防止 rightSize 经常改变导致菜单 render
+ */
 const RightContent: React.FC<TopNavHeaderProps> = ({ rightContentRender, ...props }) => {
 	const [rightSize, setRightSize] = useState<number | string>('auto')
 
@@ -59,13 +61,23 @@ const RightContent: React.FC<TopNavHeaderProps> = ({ rightContentRender, ...prop
 				minWidth: rightSize
 			}}
 		>
-			<div style={{ paddingRight: 8 }}>
+			<div
+				style={{
+					paddingRight: 8
+				}}
+			>
 				<ResizeObserver
-					onResize={({ width }) => {
+					onResize={({ width }: { width: number }) => {
 						setRightSize(width)
 					}}
 				>
-					{rightContentRender && <div>{rightContentRender({ ...props })}</div>}
+					{rightContentRender && (
+						<div>
+							{rightContentRender({
+								...props
+							})}
+						</div>
+					)}
 				</ResizeObserver>
 			</div>
 		</div>
@@ -113,15 +125,14 @@ const TopNavHeader: React.FC<TopNavHeaderProps> = props => {
 						}}
 						menuItemRender={(renderItemProps, defaultDom) => {
 							return renderItemProps.routes ? (
-								<div>{defaultDom}</div>
+								<MenuPopover
+									renderItemProps={renderItemProps}
+									prefixCls={prefixCls}
+									overflowedIndicatorPopupClassName={overflowedIndicatorPopupClassName}
+								>
+									{defaultDom}
+								</MenuPopover>
 							) : (
-								// <MenuPopover
-								// 	renderItemProps={renderItemProps}
-								// 	prefixCls={prefixCls}
-								// 	overflowedIndicatorPopupClassName={overflowedIndicatorPopupClassName}
-								// >
-								// 	{defaultDom}
-								// </MenuPopover>
 								<Link to={renderItemProps.path!}>{defaultDom}</Link>
 							)
 						}}
