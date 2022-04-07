@@ -3,9 +3,9 @@ import { Avatar, Menu, Spin, Dropdown } from 'antd'
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 import { MenuInfo } from 'rc-menu/lib/interface'
 import styles from './index.module.less'
-import GlobalContext from '@/context/GlobalContext'
+import { useGlobal } from '@/pro'
 import { Link } from 'react-router-dom'
-import ThemeSetting from '@/components/ThemeSetting/ThemeSetting'
+import ThemeSetting from '../../../ThemeSetting/ThemeSetting'
 import { loginOut } from '@/api'
 import memoryConfig from '@config/memoryConfig'
 
@@ -30,13 +30,12 @@ const fetchLoginOut = async () => {
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
 	const [visible, setVisible] = useState<boolean>(false)
 
-	const { initialState } = GlobalContext.usePicker(['initialState'])
+	const [initialState] = useGlobal()
 
 	const onMenuClick = useCallback(
 		(event: MenuInfo) => {
 			const { key } = event
 			if (key === 'logout' && initialState) {
-				// setInitialState({ ...initialState, userInfo: undefined });
 				fetchLoginOut()
 			}
 

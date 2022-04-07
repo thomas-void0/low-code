@@ -5,9 +5,7 @@ import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale/zh_CN'
 import ProEmpty from './components/ProEmpty'
 import PageLoading from './components/Loading'
-import GlobalContext from './context/GlobalContext'
-import { AccessProvider } from './context/AccessContext'
-import CreateRoutes from './layout/renderer-react/renderRoutes'
+import { GlobalProvider, AccessProvider, CreateRoutes } from './pro'
 import routes from './routes'
 
 import 'virtual:windi.css'
@@ -24,11 +22,11 @@ function App() {
 			>
 				<BrowserRouter basename="/">
 					<Suspense fallback={<PageLoading />}>
-						<GlobalContext.Provider value={{ routes }}>
+						<GlobalProvider routes={routes}>
 							<AccessProvider routes={routes}>
 								<CreateRoutes />
 							</AccessProvider>
-						</GlobalContext.Provider>
+						</GlobalProvider>
 					</Suspense>
 				</BrowserRouter>
 			</ConfigProvider>

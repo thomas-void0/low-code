@@ -13,7 +13,7 @@ const routes: Route[] = [
 	},
 	{
 		path: '/',
-		component: lazyLoad(() => import('@/layout')),
+		component: lazyLoad(() => import('@/pro/layout')),
 		routes: [
 			{
 				path: '/dashboard',
