@@ -24,7 +24,6 @@ import classNames from 'classnames'
 import MenuProvider from './context/MenuContext'
 import RouteContext from './context/RouteContext'
 import PageLoading from './components/Loading'
-import ErrorBoundary from './components/ErrorBoundary'
 import { WithExceptionOpChildren } from './components/WithExceptionOpChildren'
 import { useGlobal } from '../context/GlobalProvider'
 
@@ -374,19 +373,17 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 									{siderMenuDom}
 									<div style={genLayoutStyle} className={context.getPrefixCls('layout')}>
 										{headerDom}
-										<ErrorBoundary>
-											<Suspense fallback={<PageLoading />}>
-												<Layout.Content
-													className={contentClassName}
-													style={{
-														...defaultProps.contentStyle,
-														...contentStyle
-													}}
-												>
-													{children}
-												</Layout.Content>
-											</Suspense>
-										</ErrorBoundary>
+										<Suspense fallback={<PageLoading />}>
+											<Layout.Content
+												className={contentClassName}
+												style={{
+													...defaultProps.contentStyle,
+													...contentStyle
+												}}
+											>
+												{children}
+											</Layout.Content>
+										</Suspense>
 									</div>
 								</Layout>
 							</div>
