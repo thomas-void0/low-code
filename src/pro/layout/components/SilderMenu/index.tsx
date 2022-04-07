@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import SiderMenu, { PrivateSiderMenuProps, SiderMenuProps } from './SliderMenu'
-import MenuContext from '../../context/MenuContext'
+import { useMenu } from '../../context/MenuContext'
 import getFlatMenu from '../../utils/getFlatMenu'
 import { omit } from 'lodash-es'
 import './index.less'
 
 const SiderMenuWrapper: React.FC<SiderMenuProps & PrivateSiderMenuProps> = props => {
 	const { menuData, style, className, hide, prefixCls, matchMenuKeys } = props
-	const { setFlatMenuKeys } = MenuContext.usePicker(['setFlatMenuKeys'])
+	const [, setFlatMenuKeys] = useMenu()
 
 	useEffect(() => {
 		if (!menuData || menuData.length < 1) {

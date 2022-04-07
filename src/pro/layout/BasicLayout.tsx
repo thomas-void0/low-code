@@ -21,7 +21,7 @@ import { omit } from 'lodash-es'
 import getLayoutRenderConfig from './utils/getLayoutRenderConfig'
 import { getBreadcrumbProps } from './utils/getBreadcrumbProps'
 import classNames from 'classnames'
-import MenuCounter from './context/MenuContext'
+import MenuProvider from './context/MenuContext'
 import RouteContext from './context/RouteContext'
 import PageLoading from './components/Loading'
 import ErrorBoundary from './components/ErrorBoundary'
@@ -335,7 +335,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 
 	useSetDocumentTitle(pageTitleInfo, props.webTitle || false)
 	return (
-		<MenuCounter.Provider>
+		<MenuProvider>
 			<RouteContext.Provider
 				value={{
 					...defaultProps,
@@ -394,7 +394,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 					</WithExceptionOpChildren>
 				)}
 			</RouteContext.Provider>
-		</MenuCounter.Provider>
+		</MenuProvider>
 	)
 }
 

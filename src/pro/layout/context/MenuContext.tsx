@@ -1,13 +1,37 @@
-import { createContainer } from '@minko-fe/context-state'
-import { useState } from 'react'
+import React, { useState, createContext, FC, useCallback, useMemo, useContext } from 'react'
 
-function useMenuCounter() {
-	const [flatMenuKeys, setFlatMenuKeys] = useState<string[]>([])
-	return {
-		flatMenuKeys,
-		setFlatMenuKeys
-	}
+type MenuValue = {
+	flatMenuKeys: string[]
+	dispatch: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-const MenuCounter = createContainer(useMenuCounter)
-export default MenuCounter
+const MenuCounter = createContext<MenuValue>({
+	flatMenuKeys: [],
+	dispatch: () => {}
+})
+
+const { Provider } = MenuCounter
+
+const MenuProvider: FC<any> = ({ children }) => {
+	const [flatMenuKeys, setFlatMenuKeys] = useState<string[]>([])
+
+	const dispatch = useCallback(setFlatMenuKeys, [])
+
+	const value = useMemo(
+		() => ({
+			flatMenuKeys,
+			dispatch
+		}),
+		[flatMenuKeys]
+	)
+
+	return <Provider value={value}>{children}</Provider>
+}
+
+// 使用菜单
+export const useMenu = (): [string[], MenuValue['dispatch']] => {
+	const { flatMenuKeys, dispatch } = useContext(MenuCounter)
+	return [flatMenuKeys, dispatch]
+}
+
+export default MenuProvider

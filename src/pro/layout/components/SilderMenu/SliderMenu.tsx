@@ -6,9 +6,9 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 
 import './index.less'
 import BaseMenu, { BaseMenuProps } from '../BaseMenu'
-import MenuContext from '../../context/MenuContext'
+import { useMenu } from '../../context/MenuContext'
 import { Link } from 'react-router-dom'
-import { WithFalse } from '@/layout/types/typings'
+import { WithFalse } from '../../../typings/menu'
 const { Sider } = Layout
 
 export type SiderMenuProps = {
@@ -62,15 +62,15 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = props => {
 	} = props
 
 	const baseClassName = `${prefixCls}-sider`
-	const { flatMenuKeys } = MenuContext.useContainer()
+	const [flatMenuKeys] = useMenu()
 	const siderClassName = classNames(`${baseClassName}`, {
 		[`${baseClassName}-fixed`]: fixSiderbar,
 		[`${baseClassName}-layout-mix`]: true,
 		[`${baseClassName}-light`]: true
 	})
 
-	const extraDom = menuExtraRender && menuExtraRender(props)
-	const menuDom = menuContentRender !== false && flatMenuKeys && (
+	const extraDom = menuExtraRender && flatMenuKeys.length && menuExtraRender(props)
+	const menuDom = menuContentRender !== false && (
 		<BaseMenu
 			{...props}
 			key="base-menu"
