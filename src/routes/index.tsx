@@ -1,5 +1,5 @@
+import { Route } from '@/pro/typings/menu'
 import { ComponentType, lazy } from 'react'
-import { Route } from '@/layout/types/typings'
 
 function lazyLoad(src: () => Promise<{ default: ComponentType<any> }>) {
 	return lazy(src)

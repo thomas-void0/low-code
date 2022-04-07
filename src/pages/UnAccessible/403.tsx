@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button, Result, Space } from 'antd'
-import GlobalContext from '@/context/GlobalContext'
 import { useHistory } from 'react-router'
 import PageLoading from '@/components/Loading'
+import { useGlobal } from '@/pro'
 
 const UnAccessible: React.FC = () => {
-	const { initialState } = GlobalContext.usePicker(['initialState'])
+	const [initialState] = useGlobal()
 
 	const { userInfo } = initialState || {}
 

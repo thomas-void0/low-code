@@ -7,7 +7,7 @@ import { themeName, theme as defaultTheme } from '@/utils/setting'
 import type { Theme } from 'antd/es/config-provider/context'
 import styles from './index.module.less'
 import ThemeContext from '@/context/ThemeContext'
-import useAnimationFrameState from '@/hooks/useAnimationFrameState'
+import useAnimationFrameState from '@/pro/layout/hooks/useAnimationFrameState'
 
 type ThemeCompProps = {
 	title: string

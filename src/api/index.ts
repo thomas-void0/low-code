@@ -1,4 +1,4 @@
-import { request } from '@/service'
+import { request } from '../pro/service'
 
 // 获取用户信息以及相关信息同步
 export async function getUser() {
