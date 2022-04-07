@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import ThemeContext from './context/ThemeContext'
+import ThemeProvider from './context/ThemeContext'
 import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale/zh_CN'
 import ProEmpty from './components/ProEmpty'
@@ -13,7 +13,7 @@ import './assets/css/index.less'
 
 function App() {
 	return (
-		<ThemeContext.Provider>
+		<ThemeProvider>
 			<ConfigProvider
 				locale={zh_CN}
 				input={{ autoComplete: 'off' }}
@@ -30,7 +30,7 @@ function App() {
 					</Suspense>
 				</BrowserRouter>
 			</ConfigProvider>
-		</ThemeContext.Provider>
+		</ThemeProvider>
 	)
 }
 export default App

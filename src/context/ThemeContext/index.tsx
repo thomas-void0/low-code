@@ -1,11 +1,32 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, createContext, useMemo } from 'react'
 import { Theme } from 'antd/es/config-provider/context'
-import { createContainer } from '@minko-fe/context-state'
 import { ConfigProvider } from 'antd'
 import { theme as defaultTheme, themeName } from '@/utils/setting'
 
-function useThemeContext() {
+type ThemeValue = {
+	theme: Theme
+	dispatch: React.Dispatch<React.SetStateAction<Theme>>
+}
+
+const ThemeContext = createContext<ThemeValue>({
+	theme: defaultTheme,
+	dispatch: () => {}
+})
+
+const { Provider } = ThemeContext
+
+const ThemeProvider: React.FC<any> = ({ children }) => {
 	const [theme, setTheme] = useState<Theme>(defaultTheme)
+
+	const themeValue = useMemo(
+		() => ({
+			theme,
+			dispatch: setTheme
+		}),
+		[theme]
+	)
+
+	const [, dispatch] = useTheme()
 
 	useEffect(() => {
 		const localTheme = localStorage.getItem(themeName)
@@ -14,22 +35,22 @@ function useThemeContext() {
 			ConfigProvider.config({
 				theme: JSON.parse(localTheme)
 			})
-			setTheme(JSON.parse(localTheme) as Theme)
+			dispatch(JSON.parse(localTheme) as Theme)
 		} else {
 			localStorage.setItem(themeName, JSON.stringify(defaultTheme))
 			ConfigProvider.config({
 				theme: defaultTheme
 			})
-			setTheme(defaultTheme)
+			dispatch(defaultTheme)
 		}
 	}, [])
 
-	return {
-		theme,
-		setTheme
-	}
+	return <Provider value={themeValue}>{children}</Provider>
 }
 
-const ThemeContext = createContainer(useThemeContext)
+export const useTheme = (): [ThemeValue['theme'], ThemeValue['dispatch']] => {
+	const { theme, dispatch } = useContext(ThemeContext)
+	return [theme, dispatch]
+}
 
-export default ThemeContext
+export default ThemeProvider

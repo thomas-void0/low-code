@@ -21,7 +21,6 @@
 		]
 	},
 	"dependencies": {
-		"@minko-fe/context-state": "^1.2.2",
 		"ahooks": "^3.1.14",
 		"antd": "^4.19.3",
 		"blueimp-md5": "^2.19.0",

@@ -6,7 +6,7 @@ import { Button, ConfigProvider, Divider, message } from 'antd'
 import { themeName, theme as defaultTheme } from '@/utils/setting'
 import type { Theme } from 'antd/es/config-provider/context'
 import styles from './index.module.less'
-import ThemeContext from '@/context/ThemeContext'
+import { useTheme } from '@/context/ThemeContext'
 import useAnimationFrameState from '@/pro/layout/hooks/useAnimationFrameState'
 
 type ThemeCompProps = {
@@ -107,7 +107,7 @@ const ThemeSetting: React.FC<Feedback.FeedbackProps> = props => {
 		return JSON.parse(localStorage.getItem(themeName) || '{}')
 	}
 
-	const { setTheme: themeContextSetTheme } = ThemeContext.useContainer()
+	const [, themeContextSetTheme] = useTheme()
 
 	const setTheme = (color: Partial<Record<keyof Theme, string>>) => {
 		const prevColors = getTheme()
