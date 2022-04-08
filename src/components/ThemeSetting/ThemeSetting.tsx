@@ -107,8 +107,6 @@ const ThemeSetting: React.FC<Feedback.FeedbackProps> = props => {
 		return JSON.parse(localStorage.getItem(themeName) || '{}')
 	}
 
-	const [, themeContextSetTheme] = useTheme()
-
 	const setTheme = (color: Partial<Record<keyof Theme, string>>) => {
 		const prevColors = getTheme()
 
@@ -122,8 +120,6 @@ const ThemeSetting: React.FC<Feedback.FeedbackProps> = props => {
 		ConfigProvider.config({
 			theme: v
 		})
-
-		themeContextSetTheme(v)
 
 		setThemeList(list => {
 			const i = list.findIndex(item => item.name === Object.keys(color)[0])
@@ -174,8 +170,6 @@ const ThemeSetting: React.FC<Feedback.FeedbackProps> = props => {
 		ConfigProvider.config({
 			theme: defaultTheme
 		})
-
-		themeContextSetTheme(defaultTheme)
 
 		initTheme()
 	}

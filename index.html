@@ -7,7 +7,30 @@
 		<title>test</title>
 	</head>
 	<body>
-		<div id="root"></div>
+		<div id="root">
+			<style>
+				html,
+				body,
+				#root {
+					height: 100%;
+					margin: 0;
+					padding: 0;
+				}
+			</style>
+			<div
+				style="
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 100vw;
+					height: 100vh;
+				"
+			>
+				<div style="width: 230px">
+					<img style="width: 100%" src="/logo.svg" />
+				</div>
+			</div>
+		</div>
 		<script type="module" src="/src/main.tsx"></script>
 	</body>
 </html>
