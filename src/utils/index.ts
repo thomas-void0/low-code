@@ -1,9 +1,9 @@
-/* global process */
 import { ENV } from '../types/global'
 
 // 获取环境变量
 export function getEev(): ENV {
-	return process.env.NODE_ENV as ENV
+	// @ts-ignore
+	return import.meta.env.VITE_NODE_ENV
 }
 
 // 复制文本
