@@ -1,5 +1,5 @@
 // 递归处理路由，把没有权限的路由从路由配置中剔除出去
-import { MenuDataItem } from '@/layout/types/typings'
+import { MenuDataItem } from '../typings/menu'
 
 type Routes = MenuDataItem[]
 

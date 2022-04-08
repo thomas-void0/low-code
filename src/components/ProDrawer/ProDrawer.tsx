@@ -3,7 +3,7 @@ import { Drawer, DrawerProps } from 'antd'
 import { CloseOutlined } from '@ant-design/icons'
 import styles from './index.module.less'
 import classNames from 'classnames'
-import { breakpoints } from '@/utils/setting'
+import { breakpoints } from '@config/themeSetting'
 import { useSize } from 'ahooks'
 
 // 封装ProDrawer

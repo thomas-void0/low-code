@@ -5,7 +5,7 @@ import HeaderRight from '@/components/HeaderRight'
 import RouteContext from './context/RouteContext'
 import getMenuData from './utils/getMenuData'
 import getPageTitle from './utils/getPageTitle'
-import { layoutSettings } from '../proConfig'
+import { layoutSettings } from '@config/proConfig'
 
 export { BasicLayout, RouteContext, getPageTitle, getMenuData, WaterMark }
 

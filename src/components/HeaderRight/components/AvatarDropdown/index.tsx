@@ -17,7 +17,6 @@ export interface GlobalHeaderRightProps {
  * 退出登录
  */
 const fetchLoginOut = async () => {
-	// window.location.href = memoryConfig.loginUrl;
 	loginOut()
 		.then(() => {
 			window.location.href = memoryConfig.loginUrl

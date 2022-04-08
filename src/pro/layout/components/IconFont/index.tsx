@@ -7,7 +7,7 @@
  * type: 对应的iconfont图标名
  */
 
-import { layoutSettings } from '../../../proConfig'
+import { layoutSettings } from '@config/proConfig'
 import { createFromIconfontCN } from '@ant-design/icons'
 
 const IconFont = createFromIconfontCN({

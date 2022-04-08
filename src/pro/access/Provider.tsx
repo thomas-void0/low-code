@@ -1,6 +1,6 @@
 // 权限容器
 import React, { useMemo } from 'react'
-import { accessFactory } from '../proConfig'
+import accessFactory from '@config/access'
 import { MenuDataItem } from '../typings/menu'
 import AccessContext, { AccessInstance } from './context'
 import traverseModifyRoutes from './traverseModifyRoutes'

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, createContext, useMemo } from 'react'
 import { Theme } from 'antd/es/config-provider/context'
 import { ConfigProvider } from 'antd'
-import { theme as defaultTheme, themeName } from '@/utils/setting'
+import { theme as defaultTheme, themeName } from '@config/themeSetting'
 
 type ThemeValue = {
 	theme: Theme

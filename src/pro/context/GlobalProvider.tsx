@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createContext, useContext, useCallback, useMemo } from 'react'
 import { getBreadcrumbNameMap } from '../layout/utils/getBreadcrumbNameMap'
-import { getInitialState } from '../proConfig'
+import { getInitialState } from '@config/proConfig'
 import { InitialStateType } from '../typings/globalContext'
 import { Route } from '../typings/menu'
 

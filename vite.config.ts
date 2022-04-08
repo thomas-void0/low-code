@@ -4,8 +4,7 @@ import { ConfigEnv, loadEnv, UserConfig } from 'vite'
 import legacy from '@vitejs/plugin-legacy'
 import windiCSS from 'vite-plugin-windicss'
 import react from '@vitejs/plugin-react'
-import { HOST, PORT } from './config/constant'
-import proxyList from './config/proxy'
+import proxyList from './src/config/proxy'
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfig => {
@@ -38,7 +37,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 				{ find: '@', replacement: path.resolve(__dirname, './src') },
 				{
 					find: '@config',
-					replacement: path.resolve(__dirname, './config')
+					replacement: path.resolve(__dirname, './src/config')
 				},
 				{
 					find: /^~/,
@@ -54,8 +53,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 			}
 		},
 		server: {
-			host: HOST,
-			port: PORT,
+			host: 'dev.a.newrank.cn',
+			port: 3000,
 			proxy: proxyList,
 			open: true
 		},

@@ -8,10 +8,10 @@
  */
 
 import { createFromIconfontCN } from '@ant-design/icons'
-import { iconfontUrl } from '@/utils/setting'
+import { layoutSettings } from '@/pro/proConfig'
 
 const IconFont = createFromIconfontCN({
-	scriptUrl: iconfontUrl
+	scriptUrl: layoutSettings.iconfontUrl
 })
 
 export default IconFont
