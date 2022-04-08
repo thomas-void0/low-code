@@ -1,1 +1,1 @@
-新 kol 项目
+vite + react 模板
