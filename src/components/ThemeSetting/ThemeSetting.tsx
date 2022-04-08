@@ -6,7 +6,6 @@ import { Button, ConfigProvider, Divider, message } from 'antd'
 import { themeName, theme as defaultTheme } from '@config/themeSetting'
 import type { Theme } from 'antd/es/config-provider/context'
 import styles from './index.module.less'
-import { useTheme } from '@/context/ThemeContext'
 import useAnimationFrameState from '@/pro/layout/hooks/useAnimationFrameState'
 
 type ThemeCompProps = {
