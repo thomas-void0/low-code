@@ -11,6 +11,7 @@
 		"prepare": "husky install",
 		"lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
 		"lint:style": "stylelint --cache --fix \"**/*.{less,postcss,scss,css}\" --cache --cache-location node_modules/.cache/stylelint/",
+		"analysis": "windicss-analysis",
 		"preview": "vite preview"
 	},
 	"lint-staged": {
@@ -77,6 +78,7 @@
 		"typescript": "^4.5.4",
 		"vite": "^2.9.0",
 		"vite-plugin-svgr": "^1.1.0",
-		"vite-plugin-windicss": "^1.8.3"
+		"vite-plugin-windicss": "^1.8.3",
+		"windicss-analysis": "^0.3.5"
 	}
 }

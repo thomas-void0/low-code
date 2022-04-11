@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 const Home: FC<any> = () => {
-	return <div>home</div>
+	return <div className="!wd-bg-$primary-color">home</div>
 }
 
 export default Home
